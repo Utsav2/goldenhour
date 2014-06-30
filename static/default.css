@@ -3,12 +3,45 @@
 html{
 
 	font-family: 'Lato', sans-serif;
+
+}
+body{
+	
+	background-color: #333333;
 }
 /*General one time styling of the Google Map */
 
+.map-container-big{
+
+	position: absolute;
+
+	top:10%;
+
+	height:90%;
+
+	left:0%;
+
+	width:84%;
+
+}
+
+.map-container-small{
+
+	position: absolute;
+
+	top:10%;
+
+	height:80%;
+
+	left:0%;
+
+	width:42%;
+
+}
+
 #map{
 
-	/* Filling the entire screen with Google Map */
+	/* Filling the entire container with Google Map */
 
 	width:100%;
 
@@ -36,7 +69,7 @@ html{
 	padding: 20px;
 	margin: 0;
 	font-weight: 300;
-	background: #1a1a1a;
+	background: #333333;
 }
 
 .menuBar a {
@@ -62,35 +95,40 @@ html{
 	top: 0;
 	z-index: 1000;
 	font-size: 1.2vw;
+	border-left:1px solid #fa8d70;
+
 }
 .menuBar-horizontal {
-	width: 100%;
+	width: 84%;
 	height: 10%;
 	left: 0;
 	z-index: 800;
 	overflow: hidden;
-	background-color: #000;
 	font-size: 2.2vh;
-
+	
+	
 
 }
 
 .menuBar-horizontal h3 {
 	height: 100%;
-	width: 20%;
-	float: left;
+	float: right;
 	padding-top: 2vh;
+	border-left: 1px solid #fa8d70;
+
 }
 
 .menuBar-horizontal a {
 	float: left;
-	width: 20%;
-	padding: 0.8em;
+	width: 21.4%;
+	padding: 1.75% ;
 	border-left: 1px solid #fa8d70;
 	font-size: 160%;
 }
 .menuBar-vertical a {
+	border-top: 1px solid #fa8d70;
 	border-bottom: 1px solid #fa8d70;
+	background-color:#474747;
 	padding: 1em;
 }
 .menuBar-right {
@@ -102,13 +140,15 @@ html{
 }
 
 .menuBar-bottom {
-	bottom: 0px;
-	z-index:1001;
+	bottom: -10%;
+	z-index:100;
+
 }
+.menuBar-bottom-visible{
+	bottom: 0%;
+	z-index:100;
 
-
-
-
+}
 
 
 
@@ -119,7 +159,7 @@ html{
     margin-left: auto;
     margin-right: auto;
 	width: inherit;  /* This makes the next two lines work in IE8. */
-	max-width: 70%; /* Add !important if needed. */
+	max-width: 50%; /* Add !important if needed. */
 	height: auto;    /* Add !important if needed. */
 	padding-top: 1%;
 	text-align: center;

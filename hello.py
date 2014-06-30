@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 @app.route('/')
 def hello():
     number_of_reports = get_number_of_reports()
-    return render_template("index.html", title = 'Home', number_of_reports = number_of_reports)
+    return render_template("index.html")
 
 
 def get_number_of_reports():
@@ -25,7 +25,7 @@ class Report(db.Model):
     imei = db.Column(db.String, primary_key=True)
     latitude = db.Column(db.String)
     longitude = db.Column(db.String)
-    
+
 
     def __init__(self, id):
         self.id = id
