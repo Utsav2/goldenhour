@@ -121,6 +121,7 @@ html{
 	width: inherit;  /* This makes the next two lines work in IE8. */
 	max-width: 70%; /* Add !important if needed. */
 	height: auto;    /* Add !important if needed. */
-
+	padding-top: 1%;
+	text-align: center;
 }
 

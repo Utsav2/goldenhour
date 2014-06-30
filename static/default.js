@@ -103,21 +103,3 @@ function createGoogleMap() {
 
 	map.setOptions({styles: stylesArray});
 }
-
-app.directive("enter", function(){
- return function(scope, element) {
-      element.bind("mouseenter", function(){
-        
-      	
-        
-      })
-    }
-});
-
-app.directive("leave", function(){
- return function(scope, element) {
-      element.bind("mouseleave", function(){
-        
-      })
-    }
-});
