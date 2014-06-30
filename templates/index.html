@@ -1,0 +1,78 @@
+	<!DOCTYPE = HTML>
+	<html>
+
+		<head>
+
+			<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}" />
+
+			<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
+
+			<script src = "{{ url_for('static', filename='default.js') }}"></script>
+
+			<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBP9GpA13uynELdRfKAX7a9PWthWrvHhN4">
+
+    		</script>
+
+			<title>
+
+				{[{title}]}
+
+			</title>
+
+		</head>
+
+
+		<body>
+
+			<div id="map">
+
+			</div>
+
+
+
+				<div ng-app="menu">
+
+					<nav class = "menuBar menuBar-vertical menuBar-right">
+						<h3>
+
+							<img src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
+							</img>
+
+						</h3>
+						<a href="#">Celery seakale</a>
+						<a href="#">Dulse daikon</a>
+						<a href="#">Zucchini garlic</a>
+						<a href="#">Catsear azuki bean</a>
+						<a href="#">Dandelion bunya</a>
+						<a href="#">Rutabaga</a>
+					</nav>
+
+					<nav class = "menuBar menuBar-horizontal menuBar-top" enter leave>
+						<h3>
+
+						</h3>
+		
+						<h3 href="#">Celery seakale</h3>
+						<h3 href="#">Dulse daikon</h3>
+						<h3 href="#">Zucchini garlic</h3>
+
+					</nav>
+
+					<nav class = "menuBar menuBar-horizontal menuBar-bottom" enter leave>
+
+						<a href="#">settings</a>
+						<a href="#">Shah</a>
+						<a href="#">Zucchini garlic</a>
+						<a href="#">Zucchini garlic</a>
+
+					</nav>
+	 
+	   			</div>
+
+
+
+		</body>
+
+
+
+	</html>
