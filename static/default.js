@@ -91,9 +91,22 @@ function createGoogleMap() {
 	    }]
 	}]
 
+	var position = new google.maps.LatLng(18.397, 72.644)
+
+	var geocoder = new google.maps.Geocoder();
+
+	if(google.loader.ClientLocation) {
+
+		position.lat = google.loader.ClientLocation.latitude;
+
+		position.lng = google.loader.ClientLocation.longitude;
+
+	}
+
+
 	var mapOptions = {
 
-        center: new google.maps.LatLng(18.397, 72.644),
+        center: position,
         zoom: 13,
         mapTypeId: google.maps.MapTypeId.HYBRID
 
