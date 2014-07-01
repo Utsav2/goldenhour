@@ -23,6 +23,7 @@ body{
 
 	width:84%;
 
+
 }
 
 .map-container-small{
@@ -31,11 +32,12 @@ body{
 
 	top:10%;
 
-	height:80%;
+	height:79.9%;
 
 	left:0%;
 
 	width:42%;
+
 
 }
 
@@ -95,7 +97,7 @@ body{
 	top: 0;
 	z-index: 1000;
 	font-size: 1.2vw;
-	border-left:1px solid #fa8d70;
+	Aborder-left:1px solid #fa8d70;
 
 }
 .menuBar-horizontal {
@@ -114,7 +116,7 @@ body{
 	height: 100%;
 	float: right;
 	padding-top: 2vh;
-	border-left: 1px solid #fa8d70;
+	Aborder-left: 1px solid #fa8d70;
 
 }
 
@@ -122,11 +124,11 @@ body{
 	float: left;
 	width: 21.4%;
 	padding: 1.75% ;
-	border-left: 1px solid #fa8d70;
+	Aborder-top: 1px solid #fa8d70;
 	font-size: 160%;
 }
 .menuBar-vertical a {
-	border-top: 1px solid #fa8d70;
+	Aborder-top: 1px solid #fa8d70;
 	border-bottom: 1px solid #fa8d70;
 	background-color:#474747;
 	padding: 1em;
@@ -142,11 +144,17 @@ body{
 .menuBar-bottom {
 	bottom: -10%;
 	z-index:100;
+	-webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	transition: all 0.4s ease;
 
 }
 .menuBar-bottom-visible{
 	bottom: 0%;
 	z-index:100;
+	-webkit-transition: all 0.6s ease;
+	-moz-transition: all 0.6s ease;
+	transition: all 0.6s ease;
 
 }
 
@@ -165,3 +173,61 @@ body{
 	text-align: center;
 }
 
+.report{
+
+	position: absolute;
+
+	top:10.05%;
+
+	left:41.95%;
+
+	height:80%;
+
+	width:41.84%;
+
+	background-color: #505759;
+
+	z-index: -10;
+
+
+
+	-webkit-transition: all 1.5s ease;
+	-moz-transition: all 1.5s ease;
+	transition: all 1.5s ease;
+
+}
+
+.report-hidden{
+
+
+	position: absolute;
+
+	top:10%;
+
+	left:84%;
+
+	height:80%;
+
+	width:15.84%;
+
+	background-color: #505759;
+
+	z-index: -10;
+
+
+
+	-webkit-transition: all 0.75s ease;
+	-moz-transition: all 0.75s ease;
+	transition: all 0.75s ease;
+
+
+}
+
+.reportInternet {
+
+
+
+
+
+
+}

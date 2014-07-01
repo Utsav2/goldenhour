@@ -2,6 +2,8 @@ var app = angular.module("menu", []);
 
 var map;
 
+var marker_array = [];
+
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
@@ -12,6 +14,82 @@ window.onload = function (){
 	createGoogleMap();
 
 }
+
+function resizeMapDiv(smaller){
+
+	if(smaller){
+
+		 $("#map-container").animate({
+	        height: '80%',
+	        width: "41.9%"
+	     }, 750, function () {
+	          google.maps.event.trigger(map, 'resize');
+	          centerMapToUserPosition();
+	     });
+
+	}
+
+	else {
+
+		$("#map-container").animate({
+		    height: '90%',
+		    width: "84%"
+		}, 750, function () {
+		    google.maps.event.trigger(map, 'resize');
+		    centerMapToUserPosition();
+		});
+
+	}
+
+	
+
+}
+
+function reportController($scope){
+
+	$scope.myMapClass = "map-container-big";
+
+	$scope.myFooterClass = "menuBar-bottom";
+
+	$scope.reportClass = "report-hidden";
+
+
+	$scope.openReport = function(){
+
+
+		//if the report hasnt been opened or been closed before
+
+		if($scope.myMapClass == "map-container-big"){
+
+			$scope.myMapClass = "map-container-small";
+
+			$scope.myFooterClass = "menuBar-bottom-visible";
+
+			resizeMapDiv(true);
+
+			$scope.reportClass = "report";
+
+		}
+
+		else{
+
+			$scope.myMapClass = "map-container-big";
+
+			$scope.myFooterClass = "menuBar-bottom";
+
+			resizeMapDiv(false);
+
+			$scope.reportClass = "report-hidden";
+
+
+		}
+
+		//resize google map
+
+	};
+
+}
+
 function number_of_reports_control($scope){
 
 	var number_of_reports = getNumberOfReports();
@@ -190,7 +268,7 @@ function updateUserLocation(position){
 
 	reverseGeocode(position);
 
-	map.setCenter(position);
+	map.panTo(position);
 
 }
 
@@ -234,7 +312,6 @@ function updateLocationAddressValue(address){
 
 function addAddressComponent(builder, type_of_component, address, end){
 
-	console.log(address);
 
 	for(var i in address.address_components){
 

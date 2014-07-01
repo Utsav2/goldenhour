@@ -26,17 +26,19 @@
 
 		<body>
 
-			<div id = "map-container" class = "map-container-small">
+				<div ng-app="menu" id = "menu" ng-controller="reportController">
 
-				<div id="map">
+					<div id = "map-container" ng-class = "myMapClass">
 
-				</div>
+						<div id="map">
 
-			</div>
+						</div>
 
+					</div>
 
+					<div ng-class = "reportClass">
 
-				<div ng-app="menu" id = "menu">
+					</div>
 
 					<nav class = "menuBar menuBar-vertical menuBar-right">
 						<h3>
@@ -49,25 +51,24 @@
 
 							<label class = "logo-menu">Flare</label>
 
+
 						</h3>
-						<a href="#">Celery seakale</a>
-						<a href="#">Dulse daikon</a>
-						<a href="#">Zucchini garlic</a>
-						<a href="#">Catsear azuki bean</a>
-						<a href="#">Dandelion bunya</a>
-						<a href="#">Rutabaga</a>
+						<a href="#" ng-click = "openReport()">Celery seakale</a>
+						<a href="#" ng-click = "openReport()">Dulse daikon</a>
+						<a href="#" ng-click = "openReport()">Zucchini garlic</a>
+						<a href="#" ng-click = "openReport()">Catsear azuki bean</a>
+						<a href="#" ng-click = "openReport()">Dandelion bunya</a>
+						<a href="#" ng-click = "openReport()">Rutabaga</a>
 					</nav>
 
 					<nav class = "menuBar menuBar-horizontal menuBar-top">
-			
-						
 						
 						<h3 href="#" ng-controller = "number_of_reports_control">{[{data.number_of_reports}]}</h3>
 
 						<h3 href="#">{[{ location_data_text }]}</h3>
 					</nav>
 
-					<nav class = "menuBar menuBar-horizontal menuBar-bottom-visible">
+					<nav class = "menuBar menuBar-horizontal" ng-class = "myFooterClass">
 
 						<a href="#">settings</a>
 						<a href="#">block user</a>
