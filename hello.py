@@ -14,13 +14,14 @@ db = SQLAlchemy(app)
 
 class Report(db.Model):
 
+    __tablename__ = "reports"
     type_request = db.Column(db.String(10))
-    imei = db.Column(db.String, primary_key=True)
+    imei = db.Column(db.String)
     latitude = db.Column(db.String(10))
     longitude = db.Column(db.String(10))
     description = db.Column(db.String(400))
     number = db.Column(db.String(15))
-    timestamp = db.Column(db.String(10))
+    timestamp = db.Column(db.String(10), primary_key=True)
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
@@ -43,7 +44,7 @@ class Report(db.Model):
 
 class ReportPicture(db.Model, Image):
 
-    user_id = db.Column(db.String, db.ForeignKey('report.imei'), primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey('report.timestamp'), primary_key=True)
     user = db.relationship('Report')
 
 
