@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 db.create_all()
 db.session.commit()
 
-from app import views, models, columns
+
 
 class Report(db.Model):
 
@@ -32,22 +32,17 @@ class Report(db.Model):
     x = "3"
 
 
-    #def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
-        # self.type_request = type_request
-        # self.imei = imei
-        # self.latitude = latitude
-        # self.longitude = longitude
-        # self.description = description
-        # self.number = number
-        # self.timestamp = timestamp
-        # self.country = country
-        # self.area = area
-        # self.locality = locality
-
-    def __init__(self):
-        self.x = "5"
-
-        
+    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+        self.type_request = type_request
+        self.imei = imei
+        self.latitude = latitude
+        self.longitude = longitude
+        self.description = description
+        self.number = number
+        self.timestamp = timestamp
+        self.country = country
+        self.area = area
+        self.locality = locality
 
     def __repr__(self):
         return '<Name %r>' % self.name
@@ -55,14 +50,13 @@ class Report(db.Model):
 
 class ReportPicture(db.Model, Image):
 
-    user_id = db.Column(db.String, db.ForeignKey('Report.imei'), primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey('report.imei'), primary_key=True)
     user = db.relationship('Report')
     __tablename__ = 'report_picture'
 
 
 @app.route('/')
 def hello():
-    number_of_reports = get_number_of_reports()
     return render_template("index.html")
 
 
@@ -85,9 +79,9 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
+        report = Report()
         # picture_url = request.values['image']
         #report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-        report = Report()
         #db.session.add(report)
         #db.session.commit()
 
