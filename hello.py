@@ -27,10 +27,11 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
+    x = "3"
 
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
-        self.type_request = type_request
+        # self.type_request = type_request
         # self.imei = imei
         # self.latitude = latitude
         # self.longitude = longitude
@@ -40,6 +41,7 @@ class Report(db.Model):
         # self.country = country
         # self.area = area
         # self.locality = locality
+        self.x = "4"
         
 
     def __repr__(self):
