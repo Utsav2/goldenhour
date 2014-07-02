@@ -64,9 +64,11 @@ def get_number_of_reports():
 
 @app.route('/upload', methods = ['POST', 'GET'])
 def upload():
+
     _type = request.form['Type']
-    if _type == "Internet":
-        imei = request.form['IMEI']
+
+    #if _type == "Internet":
+    #    imei = request.form['IMEI']
         # latitude = request.form['Latitude']
         # longitude = request.form['Longitude']
         # number = request.form['Number']
@@ -81,11 +83,6 @@ def upload():
         # db.session.add(report)
         # db.session.commit()
     return render_template('index.html')
-
-def upload_internet():
-
-
-
 
 if __name__ == "__main__":
     app.run(debug = True)
