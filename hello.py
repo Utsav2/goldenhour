@@ -38,12 +38,12 @@ class Report(db.Model):
         self.locality = locality
 
     def __repr__(self):
-        return '<IMEI %r>' % self.imei
+        return '<IMEI %r>' % self.time
 
 
 class ReportPicture(db.Model, Image):
 
-    user_id = db.Column(db.String, db.ForeignKey('report.time'), primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey('report.timestamp'), primary_key=True)
     user = db.relationship('Report')
 
 
