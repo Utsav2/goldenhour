@@ -62,8 +62,8 @@ def hello():
 def get_number_of_reports():
     return 5
 
-@app.route('/upload', methods = ['POST', 'GET'])
-def upload(request):
+@app.route('/upload', methods = ['POST'])
+def upload():
     #_type = request.form['Type']
     #if _type == "Internet":
     #    upload_internet(request)
