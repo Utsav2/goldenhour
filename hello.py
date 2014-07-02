@@ -30,16 +30,16 @@ class Report(db.Model):
 
 
     def __init__(self, _type, imei, latitude, longitude, description, number, timestamp, country, area, locality):
-        self._type = _type
-        self.imei = imei
-        self.latitude = latitude
-        self.longitude = longitude
-        self.description = description
-        self.number = number
-        self.timestamp = timestamp
-        self.country = country
-        self.area = area
-        self.locality = locality
+        # self._type = _type
+        # self.imei = imei
+        # self.latitude = latitude
+        # self.longitude = longitude
+        # self.description = description
+        # self.number = number
+        # self.timestamp = timestamp
+        # self.country = country
+        # self.area = area
+        # self.locality = locality
         
 
     def __repr__(self):
