@@ -15,8 +15,9 @@ db.session.commit()
 
 class Report(db.Model):
 
-    __tablename__ = 'Report'
+    __tablename__ = 'report'
 
+    self = db.Column(db.String(10))
     imei = db.Column(db.String, primary_key=True)
     latitude = db.Column(db.String(10))
     longitude = db.Column(db.String(10))
@@ -28,7 +29,8 @@ class Report(db.Model):
     locality = db.Column(db.String(30))
 
 
-    def __init__(self, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+    def __init__(self, _type, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+        self._type = _type
         self.imei = imei
         self.latitude = latitude
         self.longitude = longitude
@@ -38,9 +40,17 @@ class Report(db.Model):
         self.country = country
         self.area = area
         self.locality = locality
+        self._type = _type
 
     def __repr__(self):
         return '<Name %r>' % self.name
+
+
+class ReportPicture(db.Model, Image):
+
+    user_id = db.Column(db.String, db.ForeignKey('Report.imei'), primary_key=True)
+    user = db.relationship('Report')
+    __tablename__ = 'report_picture'
 
 
 @app.route('/')
@@ -53,8 +63,33 @@ def get_number_of_reports():
     return 5
 
 @app.route('/upload', methods = ['POST'])
-def upload():
-    return 5
+def upload(request):
+    _type = request.form['Type']
+    if _type == "Internet":
+        upload_internet(request)
+
+def upload_internet(request):
+
+    imei = request.form['IMEI']
+    latitude = request.form['Latitude']
+    longitude = request.form['Longitude']
+    number = request.form['Number']
+    time = request.form['Time']
+    address_json = request.form['Address']
+    address = json.load(address_json)
+    country = address["Country"]
+    area = address["Administrative Area"]
+    locality = address["Locality"]
+
+    picture_url = request.values['image']
+
+    report = Report(imei, latitude, longitude, number, time, country, area, locality)
+
+    db.session.add(report)
+
+    db.session.commit()
+
+
 
 if __name__ == "__main__":
     app.run(debug = True)
