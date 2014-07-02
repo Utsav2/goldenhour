@@ -87,19 +87,22 @@ def initiate():
     
     locality = request.args.get("Administrative Area")
 
-    country =  request.args.get("Country")
+    country = request.args.get("Country")
 
-    #if locality == False or country == False:
 
-    #    return jsonify("")
+    if locality == False or country == False:
+
+        return jsonify("")
+
+    #queries = db.session.query(Report).filter_by(country=country, locality=locality)
 
     queries = Report.query.all()
-    
+
     mine_array = []
 
-    return jsonify("")
-
     for mine in queries :
+
+        return jsonify(mine.latitude)
 
         my_dict = dict()
 
