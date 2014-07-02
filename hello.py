@@ -93,8 +93,8 @@ def initiate():
 
     #    return jsonify("")
 
-    #queries = Report.query.all().first()
-
+    queries = Report.query.all()
+    
     mine_array = []
 
     return jsonify("")
