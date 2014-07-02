@@ -76,6 +76,7 @@ def upload():
         imei = request.form['IMEI']
         latitude = request.form['Latitude']
         longitude = request.form['Longitude']
+        description = request.form['Description']
         number = request.form['Number']
         time = request.form['Time']
         address_json = request.form['Address']
@@ -84,7 +85,7 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         # picture_url = request.values['image']
-        report = Report(type_request, imei, latitude, longitude, t, t, t, t, t, t)
+        report = Report(type_request, imei, latitude, longitude, description, number, time, t, t, t)
         #db.session.add(report)
         #db.session.commit()
 
