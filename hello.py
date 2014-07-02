@@ -97,7 +97,7 @@ def initiate():
 
     mine_array = []
 
-    return jsonify(queries)
+    return jsonify("")
 
     for mine in queries :
 
