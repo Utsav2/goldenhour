@@ -78,8 +78,9 @@ def upload():
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         db.session.add(report)
         db.session.commit()
+        return jsonify("")
 
-    return render_template('index.html')
+    return jsonify("")
 
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
