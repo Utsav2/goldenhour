@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400);
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400);
 
 html{
 
@@ -196,8 +196,8 @@ body{
 	-webkit-transition: all 1.5s ease;
 	-moz-transition: all 1.5s ease;
 	transition: all 1.5s ease;
-	
-	
+
+
 }
 
 .report-hidden{
