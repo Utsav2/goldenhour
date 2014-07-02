@@ -13,6 +13,8 @@ db = SQLAlchemy(app)
 db.create_all()
 db.session.commit()
 
+from app import views, models, columns
+
 class Report(db.Model):
 
     __tablename__ = 'report'
