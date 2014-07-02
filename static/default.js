@@ -65,10 +65,7 @@ function reportController($scope){
 	$scope.reportClass = "report-hidden";
 
 
-	$scope.openReport = function(data){
-
-
-		console.log(data);
+	$scope.openReport = function(){
 
 		//if the report hasnt been opened or been closed before
 
@@ -396,7 +393,7 @@ function addToBar(mine){
 
 	}
 
-	$('#sideBar').append('<a href = "#" ng-click="openReport(mine)">' + formattedTime + '</a>');
+	$('#sideBar').append('<a href = "#" ng-click="openReport()">' + formattedTime + '</a>');
 
 }
 
