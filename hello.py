@@ -20,10 +20,11 @@ class Report(db.Model):
     longitude = db.Column(db.String(10))
     description = db.Column(db.String(400))
     number = db.Column(db.String(15))
-    timestamp = db.Column(db.String(10), primary_key=True)
+    timestamp = db.Column(db.String(12))
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
+    id = db.Column(db.String(30), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
 
@@ -37,14 +38,15 @@ class Report(db.Model):
         self.country = country
         self.area = area
         self.locality = locality
+        self.id = timestamp + imei
 
     def __repr__(self):
-        return self.timestamp
+        return self.id
 
 
 class ReportPicture(db.Model, Image):
 
-    user_id = db.Column(db.String, db.ForeignKey('report.timestamp'), primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey('report.id'), primary_key=True)
     user = db.relationship('Report')
 
 
@@ -74,7 +76,7 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        #picture_url = request.values['image']
+        picture_url = request.files.get('image')
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         db.session.add(report)
         db.session.commit()
@@ -114,6 +116,8 @@ def initiate():
             my_dict['imei'] = mine.imei
             my_dict['timestamp'] = mine.timestamp
             my_dict['type'] = mine.type_request;
+
+        db.session.delete(mine)
 
         mine_array.append(my_dict)  
 

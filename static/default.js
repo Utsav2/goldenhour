@@ -396,7 +396,7 @@ function addToBar(mine){
 
 	}
 
-	$('#sideBar').append('<a href = "#" ng-click="openReport()">' + formattedTime + '</a>');
+	$('#sideBar').append('<a href = "#" ng-click="openReport(mine)">' + formattedTime + '</a>');
 
 }
 
@@ -414,6 +414,7 @@ function getMineData(){
 
 					+ "&country="+encodeURIComponent(country));
 
+	console.log(url+builder);
 
 	$.ajax(url+builder)
 		.done(function(text){
@@ -432,7 +433,7 @@ function getMineData(){
 
 function addMines(json_data){
 
-	for(i = json_data.length -1; i >= currentMinePosition; i--){
+	for(i = currentMinePosition; i < json_data.length; i++){
 
 		var mine = json_data[i];
 
