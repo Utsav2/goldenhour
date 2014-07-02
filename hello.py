@@ -80,7 +80,7 @@ def upload():
         locality = address["Locality"]
         # picture_url = request.values['image']
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-        #db.session.add(report)
+        db.session.add(report)
         #db.session.commit()
 
     return render_template('index.html')
