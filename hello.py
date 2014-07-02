@@ -69,7 +69,7 @@ def upload():
 
     t = " "
 
-    r = Response(t, t, t, t, t, t, t,t ,t ,t ,t)
+    r = Report(t, t, t, t, t, t, t,t ,t ,t ,t)
 
     # type_request = request.form['Type']
 
