@@ -15,8 +15,6 @@ db = SQLAlchemy(app)
 
 class Report(db.Model):
 
-    __tablename__ = 'report'
-
     type_request = db.Column(db.String(10))
     imei = db.Column(db.String, primary_key=True)
     latitude = db.Column(db.String(10))
@@ -48,7 +46,6 @@ class ReportPicture(db.Model, Image):
 
     user_id = db.Column(db.String, db.ForeignKey('report.imei'), primary_key=True)
     user = db.relationship('Report')
-    __tablename__ = 'report_picture'
 
 
 @app.route('/')
