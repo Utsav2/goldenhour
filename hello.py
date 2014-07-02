@@ -67,21 +67,21 @@ def upload():
 
     type_request = request.form['Type']
 
-    # if type_request == "Internet":
-    #     imei = request.form['IMEI']
-    #     latitude = request.form['Latitude']
-    #     longitude = request.form['Longitude']
-    #     number = request.form['Number']
-    #     time = request.form['Time']
-    #     address_json = request.form['Address']
-    #     address = json.load(address_json)
-    #     country = address["Country"]
-    #     area = address["Administrative Area"]
-    #     locality = address["Locality"]
-    #     # picture_url = request.values['image']
-    #     # report = Report(imei, latitude, longitude, number, time, country, area, locality)
-    #     # db.session.add(report)
-    #     # db.session.commit()
+    if type_request == "Internet":
+        imei = request.form['IMEI']
+        latitude = request.form['Latitude']
+        longitude = request.form['Longitude']
+        number = request.form['Number']
+        time = request.form['Time']
+        # address_json = request.form['Address']
+        # address = json.load(address_json)
+        # country = address["Country"]
+        # area = address["Administrative Area"]
+        # locality = address["Locality"]
+        # picture_url = request.values['image']
+        # report = Report(imei, latitude, longitude, number, time, country, area, locality)
+        # db.session.add(report)
+        # db.session.commit()
 
     return render_template('index.html')
 
