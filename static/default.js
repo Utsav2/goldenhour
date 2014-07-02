@@ -67,6 +67,9 @@ function reportController($scope){
 
 	$scope.openReport = function(){
 
+
+		console.log(data);
+
 		//if the report hasnt been opened or been closed before
 
 		if($scope.myMapClass == "map-container-big"){
@@ -411,7 +414,6 @@ function getMineData(){
 
 					+ "&country="+encodeURIComponent(country));
 
-	console.log(url+builder);
 
 	$.ajax(url+builder)
 		.done(function(text){
@@ -430,7 +432,7 @@ function getMineData(){
 
 function addMines(json_data){
 
-	for(i = currentMinePosition; i < json_data.length; i++){
+	for(i = json_data.length -1; i >= currentMinePosition; i--){
 
 		var mine = json_data[i];
 
