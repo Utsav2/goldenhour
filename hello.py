@@ -38,7 +38,7 @@ class Report(db.Model):
         self.locality = locality
 
     def __repr__(self):
-        return '<IMEI %r>' % self.time
+        return '<IMEI %r>' % self.timestamp
 
 
 class ReportPicture(db.Model, Image):
