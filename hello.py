@@ -68,7 +68,7 @@ def upload():
     _type = request.form['Type']
 
     if _type == "Internet":
-       imei = request.form['IMEI']
+        imei = request.form['IMEI']
         latitude = request.form['Latitude']
         longitude = request.form['Longitude']
         number = request.form['Number']
