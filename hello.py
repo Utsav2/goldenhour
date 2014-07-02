@@ -75,9 +75,9 @@ def upload():
         time = request.form['Time']
         address_json = request.form['Address']
         address = json.loads(address_json)
-        # country = address["Country"]
-        # area = address["Administrative Area"]
-        # locality = address["Locality"]
+        country = address["Country"]
+        area = address["Administrative Area"]
+        locality = address["Locality"]
         # picture_url = request.values['image']
         # report = Report(imei, latitude, longitude, number, time, country, area, locality)
         # db.session.add(report)
