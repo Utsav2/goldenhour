@@ -117,7 +117,7 @@ def initiate():
             my_dict['timestamp'] = mine.timestamp
             my_dict['type'] = mine.type_request;
 
-        db.session.delete(mine)
+        
 
         mine_array.append(my_dict)  
 
