@@ -30,7 +30,7 @@ class Report(db.Model):
     x = "3"
 
 
-    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+    #def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
         # self.type_request = type_request
         # self.imei = imei
         # self.latitude = latitude
@@ -41,7 +41,10 @@ class Report(db.Model):
         # self.country = country
         # self.area = area
         # self.locality = locality
-        self.x = "4"
+
+    def __init__(self):
+        self.x = "5"
+
         
 
     def __repr__(self):
@@ -81,7 +84,8 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         # picture_url = request.values['image']
-        report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+        #report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+        report = Report()
         #db.session.add(report)
         #db.session.commit()
 
