@@ -17,7 +17,7 @@ class Report(db.Model):
 
     __tablename__ = 'report'
 
-    self = db.Column(db.String(10))
+    _type = db.Column(db.String(10))
     imei = db.Column(db.String, primary_key=True)
     latitude = db.Column(db.String(10))
     longitude = db.Column(db.String(10))
@@ -40,7 +40,7 @@ class Report(db.Model):
         self.country = country
         self.area = area
         self.locality = locality
-        self._type = _type
+        
 
     def __repr__(self):
         return '<Name %r>' % self.name
