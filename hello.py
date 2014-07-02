@@ -27,20 +27,18 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
-    x = "3"
-
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
         self.type_request = type_request
-        # self.imei = imei
-        # self.latitude = latitude
-        # self.longitude = longitude
-        # self.description = description
-        # self.number = number
-        # self.timestamp = timestamp
-        # self.country = country
-        # self.area = area
-        # self.locality = locality
+        self.imei = imei
+        self.latitude = latitude
+        self.longitude = longitude
+        self.description = description
+        self.number = number
+        self.timestamp = timestamp
+        self.country = country
+        self.area = area
+        self.locality = locality
 
     def __repr__(self):
         return '<IMEI %r>' % self.imei
@@ -65,8 +63,6 @@ def get_number_of_reports():
 @app.route('/upload', methods = ['POST'])
 def upload():
 
-    t = " "
-
     type_request = request.form['Type']
 
     if type_request == "Internet":
@@ -84,8 +80,8 @@ def upload():
         locality = address["Locality"]
         # picture_url = request.values['image']
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-        db.session.add(report)
-        db.session.commit()
+        #db.session.add(report)
+        #db.session.commit()
 
     return render_template('index.html')
 
