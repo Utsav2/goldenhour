@@ -89,8 +89,6 @@ def initiate():
 
     country =  request.args.get("Country")
 
-    return jsonify("")
-
     #if locality == False or country == False:
 
     #    return jsonify("")
