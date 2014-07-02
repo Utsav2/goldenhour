@@ -78,10 +78,11 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        picture_url = request.values['image']
+        # picture_url = request.values['image']
         # report = Report(imei, latitude, longitude, number, time, country, area, locality)
         # db.session.add(report)
         # db.session.commit()
+        
     return render_template('index.html')
 
 if __name__ == "__main__":
