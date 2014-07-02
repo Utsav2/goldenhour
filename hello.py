@@ -26,6 +26,7 @@ class Report(db.Model):
     locality = db.Column(db.String(30))
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+
         self.type_request = type_request
         self.imei = imei
         self.latitude = latitude
@@ -38,7 +39,7 @@ class Report(db.Model):
         self.locality = locality
 
     def __repr__(self):
-        return '<IMEI %r>' % self.timestamp
+        return self.timestamp
 
 
 class ReportPicture(db.Model, Image):
@@ -51,7 +52,6 @@ class ReportPicture(db.Model, Image):
 def hello():
 
     return render_template("index.html")
-
 
 def get_number_of_reports():
     return 5
