@@ -66,10 +66,10 @@ def get_number_of_reports():
 def upload():
     _type = request.form['Type']
     if _type == "Internet":
-        upload_internet(request)
+        upload_internet()
     return render_template('index.html')
 
-def upload_internet(request):
+def upload_internet():
 
     imei = request.form['IMEI']
     latitude = request.form['Latitude']
