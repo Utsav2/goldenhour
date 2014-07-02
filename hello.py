@@ -34,18 +34,18 @@ class Report(db.Model):
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
         self.type_request = type_request
-        self.imei = imei
-        self.latitude = latitude
-        self.longitude = longitude
-        self.description = description
-        self.number = number
-        self.timestamp = timestamp
-        self.country = country
-        self.area = area
-        self.locality = locality
+        # self.imei = imei
+        # self.latitude = latitude
+        # self.longitude = longitude
+        # self.description = description
+        # self.number = number
+        # self.timestamp = timestamp
+        # self.country = country
+        # self.area = area
+        # self.locality = locality
 
     def __repr__(self):
-        return '<Name %r>' % self.name
+        return '<IMEI %r>' % self.imei
 
 
 class ReportPicture(db.Model, Image):
@@ -57,6 +57,7 @@ class ReportPicture(db.Model, Image):
 
 @app.route('/')
 def hello():
+
     return render_template("index.html")
 
 
@@ -66,9 +67,13 @@ def get_number_of_reports():
 @app.route('/upload', methods = ['POST'])
 def upload():
 
+
+
+
     type_request = request.form['Type']
 
     if type_request == "Internet":
+
         imei = request.form['IMEI']
         latitude = request.form['Latitude']
         longitude = request.form['Longitude']
@@ -80,7 +85,7 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         # picture_url = request.values['image']
-        report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+        #report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         #db.session.add(report)
         #db.session.commit()
 
