@@ -40,7 +40,7 @@
 
 					</div>
 
-					<nav class = "menuBar menuBar-vertical menuBar-right">
+					<nav class = "menuBar menuBar-vertical menuBar-right" id = "sideBar">
 						<h3>
 
 							<img src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
@@ -53,17 +53,16 @@
 
 
 						</h3>
-						<a href="#" ng-click = "openReport()">Celery seakale</a>
-						<a href="#" ng-click = "openReport()">Dulse daikon</a>
-						<a href="#" ng-click = "openReport()">Zucchini garlic</a>
-						<a href="#" ng-click = "openReport()">Catsear azuki bean</a>
-						<a href="#" ng-click = "openReport()">Dandelion bunya</a>
-						<a href="#" ng-click = "openReport()">Rutabaga</a>
+
+
+
+
+
 					</nav>
 
 					<nav class = "menuBar menuBar-horizontal menuBar-top">
 						
-						<h3 href="#" ng-controller = "number_of_reports_control">{[{data.number_of_reports}]}</h3>
+						<h3 href="#" update>{[{data.number_of_reports}]}</h3>
 
 						<h3 href="#">{[{ location_data_text }]}</h3>
 					</nav>

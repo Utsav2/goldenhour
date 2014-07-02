@@ -2,7 +2,17 @@ var app = angular.module("menu", []);
 
 var map;
 
+var administrative_area;
+
+var country;
+
 var marker_array = [];
+
+var _number_of_reports = 1;
+
+var mines_array = [];
+
+var currentMinePosition = 0;
 
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
@@ -12,6 +22,7 @@ app.config(function($interpolateProvider) {
 window.onload = function (){
 
 	createGoogleMap();
+	
 
 }
 
@@ -21,7 +32,7 @@ function resizeMapDiv(smaller){
 
 		 $("#map-container").animate({
 	        height: '80%',
-	        width: "41.9%"
+	        width: "41.75%"
 	     }, 750, function () {
 	          google.maps.event.trigger(map, 'resize');
 	          centerMapToUserPosition();
@@ -54,8 +65,10 @@ function reportController($scope){
 	$scope.reportClass = "report-hidden";
 
 
-	$scope.openReport = function(){
+	$scope.openReport = function(data){
 
+
+		console.log(data);
 
 		//if the report hasnt been opened or been closed before
 
@@ -81,7 +94,6 @@ function reportController($scope){
 
 			$scope.reportClass = "report-hidden";
 
-
 		}
 
 		//resize google map
@@ -90,29 +102,22 @@ function reportController($scope){
 
 }
 
-function number_of_reports_control($scope){
 
-	var number_of_reports = getNumberOfReports();
 
-	var builder = "";
 
-	if(number_of_reports == 0){
 
-		builder = "all done";
 
-	}
-	else{
-
-		builder = number_of_reports + " unread";
-	}
-
-	$scope.data = {number_of_reports : builder};
-
-}
 
 function getNumberOfReports(position){
 
-	return 5;
+	return _number_of_reports;
+
+}
+
+function setNumberOfReports(newNumber){
+
+	_number_of_reports = newNumber;
+
 
 }
 
@@ -295,11 +300,15 @@ function updateLocationAddressValue(address){
 
 	var builder = "";
 
-	builder += addAddressComponent(builder, "administrative_area_level_2", address, false);
+	builder += addAddressComponent(builder, "administrative_area_level_2", address) +", "
 
-	builder += addAddressComponent(builder, "administrative_area_level_1", address, false);
+	administrative_area = addAddressComponent(builder, "administrative_area_level_1", address)
 
-	builder += addAddressComponent(builder, "country", address, true);
+	builder += administrative_area + ", ";	
+
+	country = addAddressComponent(builder, "country", address);
+
+	builder += country
 
 	var scope = angular.element($("#menu")).scope();
 
@@ -308,9 +317,11 @@ function updateLocationAddressValue(address){
 	    scope.location_data_text = builder;
 
 	});
+
+	getMineData();
 }
 
-function addAddressComponent(builder, type_of_component, address, end){
+function addAddressComponent(builder, type_of_component, address){
 
 
 	for(var i in address.address_components){
@@ -323,13 +334,8 @@ function addAddressComponent(builder, type_of_component, address, end){
 
 			if(type == type_of_component){
 
-				if(!end)
-
-					return component.long_name + ", ";
-
-				else
-
-					return component.long_name;
+				
+				return component.long_name;
 
 			}
 
@@ -339,6 +345,109 @@ function addAddressComponent(builder, type_of_component, address, end){
 
 	return "";
 
-	
+}
+
+
+function addMarker(mine){
+
+
+	var latlng = new google.maps.LatLng(mine.latitude, mine.longitude);
+
+	var marker = new google.maps.Marker({
+
+      position: latlng,
+      map: map,
+      title: mine.description
+
+  	});
+
+
+
+}
+
+function addToBar(mine){
+
+	var t  = new Date(mine.timestamp * 1000);
+
+	var today = new Date();
+
+	var today_date = today.getDate();
+
+	var date = t.getDate();
+
+	var month = t.getMonth() + 1;
+
+	var hours = t.getHours();
+
+	var minutes = t.getMinutes();
+
+	var seconds = t.getSeconds();
+
+	var formattedTime;
+
+	if(today_date == date){
+
+		formattedTime = 'today, ' + hours + ':' + minutes;
+	}
+
+	else {
+
+		formattedTime = 'on ' + month + '\\' + date + ', at ' + hours + ':' + minutes;
+
+	}
+
+	$('#sideBar').append('<a href = "#" ng-click="openReport(mine)">' + formattedTime + '</a>');
+
+}
+
+
+
+
+function getMineData(){
+
+	var url = "getMineData?";
+
+	if(administrative_area == "undefined" || country == "undefined")
+		return;
+
+	var builder = ("area="+encodeURIComponent(administrative_area)
+
+					+ "&country="+encodeURIComponent(country));
+
+	console.log(url+builder);
+
+	$.ajax(url+builder)
+		.done(function(text){
+
+			var json_data = JSON.parse(text);
+
+			setNumberOfReports(json_data.length);
+
+			addMines(json_data);
+
+			setTimeout(function(){getMineData()}, 10000);
+
+		});
+
+}
+
+function addMines(json_data){
+
+	for(i = currentMinePosition; i < json_data.length; i++){
+
+		var mine = json_data[i];
+
+		if(mine.type == "Internet"){
+
+			addMarker(mine);
+
+		}
+
+		addToBar(mine);
+
+	}
+
+	currentMinePosition = json_data.length;
+
 
 }

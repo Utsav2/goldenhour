@@ -84,25 +84,24 @@ def upload():
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
 
-    
-    locality = request.args.get("Administrative Area")
+    administrative_area = request.args.get("area")
 
-    country = request.args.get("Country")
+    country = request.args.get("country")
 
+    queries = ""
 
-    if locality == False or country == False:
+    if not administrative_area:
 
-        return jsonify("")
+        queries = db.session.query(Report).filter_by(country=country)
 
-    #queries = db.session.query(Report).filter_by(country=country, locality=locality)
+    else :
 
-    queries = Report.query.all()
+        queries = db.session.query(Report).filter_by(country=country, area=administrative_area)
+
 
     mine_array = []
 
     for mine in queries :
-
-        return jsonify(mine.latitude)
 
         my_dict = dict()
 
@@ -113,10 +112,13 @@ def initiate():
             my_dict['number'] = mine.number
             my_dict['imei'] = mine.imei
             my_dict['timestamp'] = mine.timestamp
+            my_dict['type'] = mine.type_request;
 
         mine_array.append(my_dict)  
 
-    #return jsonify(mine_array)
+    json_mines = json.dumps(mine_array)
+
+    return json_mines
 
 
 if __name__ == "__main__":
