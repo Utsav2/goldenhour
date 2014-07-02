@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
@@ -74,12 +74,49 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        # picture_url = request.values['image']
+        picture_url = request.values['image']
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         db.session.add(report)
         db.session.commit()
 
     return render_template('index.html')
 
+@app.route('/getMineData', methods = ['GET'])
+def initiate():
+
+    
+    locality = request.args.get("Administrative Area")
+
+    country =request.args.get("Country")
+
+
+    #if locality == False or country == False:
+
+    #    return jsonify("")
+
+    queries = Report.query().all()
+
+    mine_array = []
+
+    return jsonify(queries)
+
+    for mine in queries :
+
+        my_dict = dict()
+
+        if mine.type_request == "Internet":
+            my_dict['latitude'] = mine.latitude
+            my_dict['longitude'] = mine.longitude
+            my_dict['description'] = mine.description
+            my_dict['number'] = mine.number
+            my_dict['imei'] = mine.imei
+            my_dict['timestamp'] = mine.timestamp
+
+        mine_array.append(my_dict)  
+
+    #return jsonify(mine_array)
+
+
 if __name__ == "__main__":
     app.run(debug = True)
+
