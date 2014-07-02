@@ -17,7 +17,7 @@ class Report(db.Model):
 
     __tablename__ = 'report'
 
-    _type = db.Column(db.String(10))
+    type_request = db.Column(db.String(10))
     imei = db.Column(db.String, primary_key=True)
     latitude = db.Column(db.String(10))
     longitude = db.Column(db.String(10))
@@ -29,8 +29,8 @@ class Report(db.Model):
     locality = db.Column(db.String(30))
 
 
-    def __init__(self, _type, imei, latitude, longitude, description, number, timestamp, country, area, locality):
-        # self._type = _type
+    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+        self.type_request = type_request
         # self.imei = imei
         # self.latitude = latitude
         # self.longitude = longitude
