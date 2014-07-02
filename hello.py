@@ -10,8 +10,6 @@ import json
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://avodddfdxytrat:yFn8_7fiQEdlhkhPJ0UjsQukCJ@ec2-54-225-135-30.compute-1.amazonaws.com:5432/df09oj774bls87')
 db = SQLAlchemy(app)
-db.create_all()
-db.session.commit()
 
 
 
@@ -86,8 +84,8 @@ def upload():
         locality = address["Locality"]
         # picture_url = request.values['image']
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-        #db.session.add(report)
-        #db.session.commit()
+        db.session.add(report)
+        db.session.commit()
 
     return render_template('index.html')
 
