@@ -74,7 +74,8 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        picture_url = request.files['image']
+        try:
+            picture_url = request.files.get('image')
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         db.session.add(report)
         db.session.commit()
