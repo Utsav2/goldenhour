@@ -5,6 +5,7 @@ import jinja2
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_imageattach.entity import Image, image_attachment
 import json
+import hashlib
 
 
 app = Flask(__name__)
@@ -38,7 +39,7 @@ class Report(db.Model):
         self.country = country
         self.area = area
         self.locality = locality
-        self.id = timestamp + imei
+        self.id = hashlib.sha224(imei + timestamp).hexdigest()
 
     def __repr__(self):
         return self.id
@@ -117,7 +118,7 @@ def initiate():
             my_dict['timestamp'] = mine.timestamp
             my_dict['type'] = mine.type_request;
 
-        
+
 
         mine_array.append(my_dict)  
 
