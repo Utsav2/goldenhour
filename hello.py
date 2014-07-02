@@ -65,8 +65,8 @@ def get_number_of_reports():
 @app.route('/upload', methods = ['POST'])
 def upload(request):
     _type = request.form['Type']
-    if _type == "Internet":
-        upload_internet(request)
+    #if _type == "Internet":
+    #    upload_internet(request)
 
 def upload_internet(request):
 
@@ -80,15 +80,10 @@ def upload_internet(request):
     country = address["Country"]
     area = address["Administrative Area"]
     locality = address["Locality"]
-
     picture_url = request.values['image']
-
     report = Report(imei, latitude, longitude, number, time, country, area, locality)
-
     db.session.add(report)
-
     db.session.commit()
-
 
 
 if __name__ == "__main__":
