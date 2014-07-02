@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_imageattach.entity import Image, image_attachment
-
+import json
 
 
 app = Flask(__name__)
@@ -73,8 +73,8 @@ def upload():
         longitude = request.form['Longitude']
         number = request.form['Number']
         time = request.form['Time']
-        # address_json = request.form['Address']
-        # address = json.load(address_json)
+        address_json = request.form['Address']
+        address = json.loads(address_json)
         # country = address["Country"]
         # area = address["Administrative Area"]
         # locality = address["Locality"]
