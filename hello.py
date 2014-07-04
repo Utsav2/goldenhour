@@ -50,6 +50,9 @@ class ReportPicture(db.Model, Image):
     user_id = db.Column(db.String, db.ForeignKey('report.id'), primary_key=True)
     user = db.relationship('Report')
 
+    def object_id(self):
+        return int(hashlib.sha1(self.user_id).hexdigest(), 16)
+
 
 @app.route('/')
 def hello():
@@ -77,14 +80,24 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        #picture_url = request.files.get('image')
+        picture_url = request.files.get('image')
+        print picture_url
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+
+        if not picture_url == "None":
+            try:
+                with store_context(store):
+                    report.picture.from_blob(picture_url)
+            except Exception:
+                print "Couldnt store image"
+                session.rollback()
         try:
             db.session.add(report)
             db.session.commit()
         except:
-            print "ERROR"
+            print "Error in uploading data, rolling back session"
             db.session.rollback()
+
 
     return jsonify("")
 
@@ -96,8 +109,6 @@ def initiate():
     country = request.args.get("country")
 
     queries = ""
-
-    print administrative_area
 
     if administrative_area == '':
 

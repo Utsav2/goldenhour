@@ -20,16 +20,7 @@ app.config(function($interpolateProvider) {
 });
 
 
-window.onload = function (){
-
-	createGoogleMap();
-	
-
-}
-
 function resizeMapDiv(smaller){
-
-	console.log('animated!')
 
 	if(smaller){
 
@@ -55,8 +46,6 @@ function resizeMapDiv(smaller){
 
 	}
 
-	
-
 }
 
 function reportController($scope){
@@ -67,17 +56,17 @@ function reportController($scope){
 
 	$scope.reportClass = "report-hidden";
 
+	//initial Position Mumbai
+
+	var position = new google.maps.LatLng(19.075955, 72.87631699999997);
+
+	createGoogleMap(position);
+
+	//centerMapToUser returns user position or initial position ^
+
+	centerMapToUserPosition(position);
 
 	$scope.openReport = function(){
-
-
-		console.log($scope.myMapClass);
-
-		//if the report hasnt been opened or been closed before
-
-		if($scope.myMapClass == "map-container-big"){
-
-			console.log("Big to small");
 
 			$scope.myMapClass = "map-container-small";
 
@@ -86,34 +75,100 @@ function reportController($scope){
 			resizeMapDiv(true);
 
 			$scope.reportClass = "report";
-
-		}
-
-		 else{
-
-			console.log("Small to big");
-
-			$scope.myMapClass = "map-container-big";
-
-			$scope.myFooterClass = "menuBar-bottom";
-
-			resizeMapDiv(false);
-
-			$scope.reportClass = "report-hidden";
-
-		}
-		
-		
-
 	};
+
+	$scope.closeReport = function(){
+
+		$scope.myMapClass = "map-container-big";
+
+		$scope.myFooterClass = "menuBar-bottom";
+
+		resizeMapDiv(false);
+
+		$scope.reportClass = "report-hidden";
+
+	}
+
+	$scope.toggleReport = function(){
+
+		if($scope.myMapClass == "map-container-big")
+			$scope.openReport();
+
+		else
+			$scope.closeReport();	
+
+	}
+
+	$scope.changeUserLocation = function(){
+
+		$scope.toggleReport();
+
+	}
 
 }
 
+function newReportController($scope, $http, $compile){
 
 
+	//This watches if the user position has changed. If it does, it gets the new administrative area and makes the ajax call to server
 
 
+	$scope.$watch('UserPosition', function() {
 
+		if(typeof $scope.UserPosition === "undefined")
+			return;
+
+		reverseGeocode($scope.UserPosition);
+
+		$scope.$watch('country', function(){
+
+			if(typeof $scope.country === "undefined")
+				return;
+
+			var request = $http({
+
+            method: "get",
+            url: "/getMineData",
+            params: {
+              	country: $scope.country,
+               	area : $scope.administrative_area
+               	}
+           	});
+
+			//It passes the function addMines on success of receiving data
+
+			request.then($scope.addMines,
+
+				function(){
+
+					console.log('error');
+
+				}
+
+			);
+
+		}); 
+
+		map.panTo($scope.UserPosition);
+
+   	});
+
+
+	$scope.addMines = function(text){
+
+		$scope.reports = text.data;
+
+		for(var i in $scope.reports){
+
+			$scope.reports[i].time_formatted = formatTime($scope.reports[i]);
+
+			addMarker($scope.reports[i]);
+
+		}
+
+	}
+
+}
 
 function getNumberOfReports(position){
 
@@ -128,7 +183,7 @@ function setNumberOfReports(newNumber){
 
 }
 
-function createGoogleMap() {
+function createGoogleMap(position) {
 
 	var stylesArray = [{
 
@@ -208,8 +263,6 @@ function createGoogleMap() {
 	    }]
 	}]
 
-	var position = new google.maps.LatLng(19.075955, 72.87631699999997)
-
 
 	var mapOptions = {
 
@@ -221,12 +274,13 @@ function createGoogleMap() {
 
 	map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-	centerMapToUserPosition(position);
-
 	map.setOptions({styles: stylesArray});
 }
 
 function centerMapToUserPosition(initialPosition){
+
+
+	var scope = angular.element($('#menu')).scope();
 
 	if(navigator.geolocation) {
 	    navigator.geolocation.getCurrentPosition(function(position) {
@@ -234,24 +288,38 @@ function centerMapToUserPosition(initialPosition){
 	    	var pos = new google.maps.LatLng(position.coords.latitude,
 	                                       position.coords.longitude);
 
-	    	//To comment out after competition
+	    	map.panTo(pos);
 
-	    	var move;
+	    	if(typeof initialPosition === "undefined")
 
-	    	if(getNumberOfReports(position) == 0){
+	    		return;
+
+	    	scope.$apply(function(){
+
+	    		scope.UserPosition = pos;
+
+	    	});
+
+	    	/*
+
+	    	if(getNumberOfReports(pos) == 0){
 
 	    		move = confirm("There are no mines at your location. As this is a trial application, would you like to go to an area with sample mines?");
 	    	}
 			
 	    	//To comment out after competition
 
-			if(!move)
+			if(!move){
 
-				updateUserLocation(pos)
 
-			else
-				updateUserLocation(initialPosition);
+			}
 
+			else{
+
+
+			}
+
+			*/
 
 	    }, function() {
 
@@ -274,15 +342,6 @@ function handleNoGeolocation(errorFlag) {
 
 }
 
-//This is the initialization of the actual web app. 
-
-function updateUserLocation(position){
-
-	reverseGeocode(position);
-
-	map.panTo(position);
-
-}
 
 function reverseGeocode(latlng){
 
@@ -294,7 +353,7 @@ function reverseGeocode(latlng){
 
 			if (results[0]) {
 
-				updateLocationAddressValue(results[0]);
+				return updateLocationAddressValue(results[0]);
 
 			}
 		}
@@ -323,9 +382,12 @@ function updateLocationAddressValue(address){
 
 	    scope.location_data_text = builder;
 
+	    scope.administrative_area = administrative_area;
+
+	    scope.country = country;
+
 	});
 
-	getMineData();
 }
 
 function addAddressComponent(builder, type_of_component, address){
@@ -357,6 +419,8 @@ function addAddressComponent(builder, type_of_component, address){
 
 function addMarker(mine){
 
+	if(mine.type == "SMS" && typeof mine.latitude == "undefined")
+		return;
 
 	var latlng = new google.maps.LatLng(mine.latitude, mine.longitude);
 
@@ -368,11 +432,9 @@ function addMarker(mine){
 
   	});
 
-
-
 }
 
-function addToBar(mine){
+function formatTime(mine){
 
 	var t  = new Date(mine.timestamp * 1000);
 
@@ -399,48 +461,18 @@ function addToBar(mine){
 
 	else {
 
-		formattedTime = 'on ' + month + '\\' + date + ', at ' + hours + ':' + minutes;
+		formattedTime = 'on ' + month + '\/' + date + ', at ' + hours + ':' + minutes;
 
 	}
 
-	var html_string = '<a href = "#" ng-click="openReport()">' + formattedTime + '</a>'
+	//var html_string = '<a href = "#" ng-click="openReport()">' + formattedTime + '</a>'
 
-	$('#sideBar').append(html_string);
-
-
-}
-
-
-
-
-function getMineData(){
-
-	var url = "getMineData?";
-
-	if(administrative_area == "undefined" || country == "undefined")
-		return;
-
-	var builder = ("area="+encodeURIComponent(administrative_area)
-
-					+ "&country="+encodeURIComponent(country));
-
-
-	$.ajax(url+builder)
-		.done(function(text){
-
-			var json_data = JSON.parse(text);
-
-			setNumberOfReports(json_data.length);
-
-			addMines(json_data);
-
-			//setTimeout(function(){getMineData()}, 10000);
-
-		});
+	return formattedTime;
 
 }
 
-function addMines(json_data){
+
+/*function addMines(json_data){
 
 	for(i = currentMinePosition; i < json_data.length; i++){
 
@@ -459,5 +491,5 @@ function addMines(json_data){
 	currentMinePosition = json_data.length;
 
 
-}
+}*/
 

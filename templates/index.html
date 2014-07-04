@@ -30,7 +30,7 @@
 
 					<div id = "map-container" ng-class = "myMapClass">
 
-						<div id="map">
+						<div id="map" create-map>
 
 						</div>
 
@@ -40,22 +40,25 @@
 
 					</div>
 
-					<nav class = "menuBar menuBar-vertical menuBar-right" id = "sideBar">
+					<nav class = "menuBar menuBar-vertical menuBar-right" ng-controller="newReportController">
 						<h3>
 
 							<img src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
-
-							
 
 							</img>
 
 							<label class = "logo-menu">Flare</label>			
 
-
-
 						</h3>
 
-						<a ng-click="openReport()">Hello</a>
+					<a href = "javascript:" ng-click="openReport()"> This is a sample report </a>
+
+					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport()">
+
+						{[{ report.time_formatted }]}
+
+					</a>
+
 
 					</nav>
 
@@ -63,7 +66,7 @@
 						
 						<h3 href="#" update>{[{data.number_of_reports}]}</h3>
 
-						<h3 href="#">{[{ location_data_text }]}</h3>
+						<h3 href="#" ng-click="changeUserLocation()" style="cursor:pointer;">{[{ location_data_text }]}</h3>
 					</nav>
 
 					<nav class = "menuBar menuBar-horizontal" ng-class = "myFooterClass">
