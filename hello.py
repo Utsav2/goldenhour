@@ -98,7 +98,7 @@ def upload():
 
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-                
+                print filename
 
         except:
             print "Error in uploading data, rolling back session"
