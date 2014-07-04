@@ -91,10 +91,11 @@ def upload():
             if not picture_binary is None:
                 try:
                     with store_context(store):
-                       my_report = db.session.query(Report).get(id)
-                       print my_report
-                       my_report.picture.from_blob(picture_binary)
-                       print "reached"
+                        print "Hello"
+                        my_report = db.session.query(Report).get(id)
+                        print "hi again"
+                        my_report.picture.from_blob(picture_binary)
+                        print "reached"
                 except:
                     print "Couldnt store image"
                     db.session.rollback()
