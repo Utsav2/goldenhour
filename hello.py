@@ -54,7 +54,7 @@ class Report(db.Model):
     def __repr__(self):
         return self.id
 
-    def store_image(path):
+    def store_image(self, path):
         self.image_path = path
 
 
