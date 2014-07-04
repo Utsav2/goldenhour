@@ -26,7 +26,7 @@
 
 		<body>
 
-				<div ng-app="menu" id = "menu" ng-controller="reportController">
+				<div ng-app="menu" id = "menu" ng-controller="reportController" ng-model="data.name">
 
 					<div id = "map-container" ng-class = "myMapClass">
 
@@ -36,11 +36,15 @@
 
 					</div>
 
-					<div ng-class = "reportClass">
+					<div ng-class = "reportClass" >
+
+						
+						<img ng-src = {[{"uploads/" + data.image}]}> </img>
+
 
 					</div>
 
-					<nav class = "menuBar menuBar-vertical menuBar-right" ng-controller="newReportController">
+					<nav class = "menuBar menuBar-vertical menuBar-right" ng-controller="newReportController" >
 						<h3>
 
 							<img src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
@@ -51,11 +55,15 @@
 
 						</h3>
 
-					<a href = "javascript:" ng-click="openReport()"> This is a sample report </a>
+					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport(report)" ng-model="data.name">
 
-					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport()">
+					{[{ 
 
-						{[{ report.time_formatted }]}
+
+						report.time_formatted
+
+
+					}]}
 
 					</a>
 

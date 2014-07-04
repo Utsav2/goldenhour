@@ -19,6 +19,10 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
+app.factory('data', function () {
+  return { name:"YO" };
+});
+
 
 function resizeMapDiv(smaller){
 
@@ -48,13 +52,15 @@ function resizeMapDiv(smaller){
 
 }
 
-function reportController($scope){
+function reportController($scope, data){
 
 	$scope.myMapClass = "map-container-big";
 
 	$scope.myFooterClass = "menuBar-bottom";
 
 	$scope.reportClass = "report-hidden";
+
+	$scope.data = data
 
 	//initial Position Mumbai
 
@@ -66,7 +72,7 @@ function reportController($scope){
 
 	centerMapToUserPosition(position);
 
-	$scope.openReport = function(){
+	$scope.openReport = function(report){
 
 			$scope.myMapClass = "map-container-small";
 
@@ -75,6 +81,9 @@ function reportController($scope){
 			resizeMapDiv(true);
 
 			$scope.reportClass = "report";
+
+			$scope.data = report
+
 	};
 
 	$scope.closeReport = function(){
@@ -105,9 +114,10 @@ function reportController($scope){
 
 	}
 
+
 }
 
-function newReportController($scope, $http, $compile){
+function newReportController($scope, $http, $compile, data){
 
 
 	//This watches if the user position has changed. If it does, it gets the new administrative area and makes the ajax call to server
@@ -167,6 +177,7 @@ function newReportController($scope, $http, $compile){
 		}
 
 	}
+
 
 }
 
@@ -465,31 +476,7 @@ function formatTime(mine){
 
 	}
 
-	//var html_string = '<a href = "#" ng-click="openReport()">' + formattedTime + '</a>'
-
 	return formattedTime;
 
 }
-
-
-/*function addMines(json_data){
-
-	for(i = currentMinePosition; i < json_data.length; i++){
-
-		var mine = json_data[i];
-
-		if(mine.type == "Internet"){
-
-			addMarker(mine);
-
-		}
-
-		addToBar(mine);
-
-	}
-
-	currentMinePosition = json_data.length;
-
-
-}*/
 
