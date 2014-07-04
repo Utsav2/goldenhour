@@ -87,10 +87,10 @@ def upload():
         if not picture_url == "None":
             try:
                 with store_context(store):
-                    report.picture.from_blob(picture_url)
+                    print "HELLO"
             except Exception:
                 print "Couldnt store image"
-                session.rollback()
+                db.session.rollback()
         try:
             db.session.add(report)
             db.session.commit()
