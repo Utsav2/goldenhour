@@ -16,11 +16,11 @@ db = SQLAlchemy(app)
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 
-app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
+# app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 class Report(db.Model):
 
@@ -54,8 +54,8 @@ class Report(db.Model):
     def __repr__(self):
         return self.id
 
-    def store_image(self, path):
-        self.image_path = path
+    # def store_image(self, path):
+    #     self.image_path = path
 
 
 class ReportPicture(db.Model, Image):
@@ -107,10 +107,10 @@ def upload():
                     print "Hello"
                     my_report = db.session.query(Report).get(id)
                     print "hi again"
-                    file_id = secure_filename(id)
-                    print "one more"
-                    image.save(os.path.join(app.config['UPLOAD_FOLDER'], file_id))
-                    print "reached"
+                    # file_id = secure_filename(id)
+                    # print "one more"
+                    # image.save(os.path.join(app.config['UPLOAD_FOLDER'], file_id))
+                    # print "reached"
                 except:
                     print "Couldnt store image"           
 
