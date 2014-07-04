@@ -19,6 +19,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
+
 window.onload = function (){
 
 	createGoogleMap();
@@ -27,6 +28,8 @@ window.onload = function (){
 }
 
 function resizeMapDiv(smaller){
+
+	console.log('animated!')
 
 	if(smaller){
 
@@ -68,9 +71,13 @@ function reportController($scope){
 	$scope.openReport = function(){
 
 
+		console.log($scope.myMapClass);
+
 		//if the report hasnt been opened or been closed before
 
 		if($scope.myMapClass == "map-container-big"){
+
+			console.log("Big to small");
 
 			$scope.myMapClass = "map-container-small";
 
@@ -82,7 +89,9 @@ function reportController($scope){
 
 		}
 
-		else{
+		 else{
+
+			console.log("Small to big");
 
 			$scope.myMapClass = "map-container-big";
 
@@ -93,8 +102,8 @@ function reportController($scope){
 			$scope.reportClass = "report-hidden";
 
 		}
-
-		//resize google map
+		
+		
 
 	};
 
@@ -394,7 +403,10 @@ function addToBar(mine){
 
 	}
 
-	$('#sideBar').append('<a href = "#" ng-click="openReport()">' + formattedTime + '</a>');
+	var html_string = '<a href = "#" ng-click="openReport()">' + formattedTime + '</a>'
+
+	$('#sideBar').append(html_string);
+
 
 }
 
@@ -412,7 +424,6 @@ function getMineData(){
 
 					+ "&country="+encodeURIComponent(country));
 
-	console.log(url+builder);
 
 	$.ajax(url+builder)
 		.done(function(text){
@@ -423,7 +434,7 @@ function getMineData(){
 
 			addMines(json_data);
 
-			setTimeout(function(){getMineData()}, 10000);
+			//setTimeout(function(){getMineData()}, 10000);
 
 		});
 
@@ -449,3 +460,4 @@ function addMines(json_data){
 
 
 }
+
