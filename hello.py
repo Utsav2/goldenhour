@@ -6,12 +6,14 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_imageattach.entity import Image, image_attachment
 import json
 import hashlib
-
+from werkzeug import secure_filename
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://avodddfdxytrat:yFn8_7fiQEdlhkhPJ0UjsQukCJ@ec2-54-225-135-30.compute-1.amazonaws.com:5432/df09oj774bls87')
 db = SQLAlchemy(app)
-
+#for images
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 
 class Report(db.Model):
 
