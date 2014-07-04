@@ -92,10 +92,9 @@ def upload():
             db.session.add(report)
             db.session.commit()
 
-            filename = secure_filename(file.filename)
-
-            # if file and allowed_file(file.filename):
-            #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         except:
             print "Error in uploading data, rolling back session"
