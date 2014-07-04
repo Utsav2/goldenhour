@@ -84,6 +84,8 @@ function reportController($scope, data){
 
 			$scope.data = report
 
+			$scope.data.image = report.image
+
 	};
 
 	$scope.closeReport = function(){
@@ -480,3 +482,12 @@ function formatTime(mine){
 
 }
 
+app.directive('errSrc', function() {
+  return {
+    link: function(scope, element, attrs) {
+      element.bind('error', function() {
+        element.attr('src', attrs.errSrc);
+      });
+    }
+  }
+});
