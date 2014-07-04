@@ -83,17 +83,22 @@ def upload():
         picture_url = request.files.get('image')
         print picture_url
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+        id = hashlib.sha224(imei + time).hexdigest()
 
-        if picture_url != 'None':
-            try:
-                with store_context(store):
-                    print "HELLO"
-            except Exception:
-                print "Couldnt store image"
-                db.session.rollback()
         try:
             db.session.add(report)
             db.session.commit()
+
+            if picture_url != 'None':
+                try:
+                    with store_context(store):
+                       my_report = db.session.query(Report).get(id)
+                except:
+                    print "Couldnt store image"
+                    db.session.rollback()
+
+           
+
         except:
             print "Error in uploading data, rolling back session"
             db.session.rollback()
