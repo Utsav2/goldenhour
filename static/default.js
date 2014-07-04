@@ -396,7 +396,7 @@ function addToBar(mine){
 
 	}
 
-	$('#sideBar').append('<a href = "#" ng-click="openReport(mine)">' + formattedTime + '</a>');
+	$('#sideBar').append('<a href = "#" ng-click="openReport()">' + formattedTime + '</a>');
 
 }
 
