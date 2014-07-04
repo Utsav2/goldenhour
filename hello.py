@@ -89,10 +89,11 @@ def upload():
             db.session.add(report)
             db.session.commit()
 
-            if picture_url != 'None':
+            if not picture_url is None:
                 try:
                     with store_context(store):
                        my_report = db.session.query(Report).get(id)
+                       print my_report
                 except:
                     print "Couldnt store image"
                     db.session.rollback()
