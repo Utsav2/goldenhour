@@ -83,6 +83,7 @@ def upload():
         try:
             db.session.commit()
         except:
+            print "ERROR"
             db.session.rollback()
 
     return jsonify("")
