@@ -100,22 +100,22 @@ def upload():
             db.session.add(report)
             db.session.commit()
 
-            if not image is None:
-                #user has uploaded image
-                print "first"
-                try:
-                    print "Hello"
-                    my_report = db.session.query(Report).get(id)
-                    print "hi again"
-                    # file_id = secure_filename(id)
-                    # print "one more"
-                    # image.save(os.path.join(app.config['UPLOAD_FOLDER'], file_id))
-                    # print "reached"
-                except:
-                    print "Couldnt store image"           
+            # if not image is None:
+            #     #user has uploaded image
+            #     print "first"
+            #     try:
+            #         print "Hello"
+            #         my_report = db.session.query(Report).get(id)
+            #         print "hi again"
+            #         # file_id = secure_filename(id)
+            #         # print "one more"
+            #         # image.save(os.path.join(app.config['UPLOAD_FOLDER'], file_id))
+            #         # print "reached"
+            #     except:
+            #         print "Couldnt store image"           
 
         except:
-            print "Error in uploading data, rolling back session"
+            print "Error in uploading data"
 
     return jsonify("")
 
