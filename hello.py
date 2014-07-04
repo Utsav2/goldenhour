@@ -158,9 +158,8 @@ def initiate():
             my_dict['number'] = mine.number
             my_dict['imei'] = mine.imei
             my_dict['timestamp'] = mine.timestamp
-            my_dict['type'] = mine.type_request;
-
-
+            my_dict['type'] = mine.type_request
+            my_dict['image'] = mine.image
 
         mine_array.append(my_dict)  
 
