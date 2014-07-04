@@ -79,8 +79,8 @@ def upload():
         locality = address["Locality"]
         #picture_url = request.files.get('image')
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-        db.session.add(report)
         try:
+            db.session.add(report)
             db.session.commit()
         except:
             print "ERROR"
