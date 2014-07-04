@@ -93,8 +93,12 @@ def upload():
             db.session.commit()
 
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
+
+                filename = secure_filename(hashlib.sha224(file.filename + timestamp).hexdigest())
+
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                
 
         except:
             print "Error in uploading data, rolling back session"
