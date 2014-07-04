@@ -7,13 +7,20 @@ from sqlalchemy_imageattach.entity import Image, image_attachment
 from sqlalchemy_imageattach.context import store_context
 import json
 import hashlib
+from werkzeug import secure_filename
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://avodddfdxytrat:yFn8_7fiQEdlhkhPJ0UjsQukCJ@ec2-54-225-135-30.compute-1.amazonaws.com:5432/df09oj774bls87')
 db = SQLAlchemy(app)
 
-app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 class Report(db.Model):
 
@@ -27,6 +34,7 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
+    image_path = db.Column(db.String(100))
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
@@ -45,6 +53,9 @@ class Report(db.Model):
 
     def __repr__(self):
         return self.id
+
+    def store_image(path):
+        self.image_path = path
 
 
 class ReportPicture(db.Model, Image):
@@ -68,9 +79,6 @@ def get_number_of_reports():
 def upload():
 
     type_request = request.form['Type']
-
-
-
     if type_request == "Internet":
 
         imei = request.form['IMEI']
@@ -84,7 +92,7 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        picture_binary = request.files.get('image')
+        image = request.files.get('image')
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         id = hashlib.sha224(imei + time).hexdigest()
 
@@ -92,19 +100,19 @@ def upload():
             db.session.add(report)
             db.session.commit()
 
-            if not picture_binary is None:
+            if not image is None:
+                #user has uploaded image
                 print "first"
                 try:
                     print "Hello"
                     my_report = db.session.query(Report).get(id)
                     print "hi again"
-                    #my_report.picture.from_blob(picture_binary)
+                    file_id = secure_filename(id)
+                    print "one more"
+                    image.save(os.path.join(app.config['UPLOAD_FOLDER'], file_id))
                     print "reached"
                 except:
-                    print "Couldnt store image"
-                    db.session.rollback()
-
-           
+                    print "Couldnt store image"           
 
         except:
             print "Error in uploading data, rolling back session"
