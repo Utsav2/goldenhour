@@ -84,7 +84,7 @@ def upload():
         print picture_url
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
 
-        if picture_url != "None":
+        if picture_url != 'None':
             try:
                 with store_context(store):
                     print "HELLO"
