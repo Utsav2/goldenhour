@@ -100,12 +100,20 @@ def upload():
 
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+                print "Saved"
+
 
         except:
             print "Error in uploading data, rolling back session"
             db.session.rollback()
 
     return jsonify("")
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
 
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
