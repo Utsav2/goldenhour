@@ -53,7 +53,7 @@ class Report(db.Model):
         return self.id
 
     def set_image(self, path):
-        self.image = path
+        self.im
 
 
 class ReportPicture(db.Model, Image):
@@ -109,10 +109,11 @@ def upload():
                 report.set_image(filename)
 
 
-        db.session.add(report)
-        db.session.commit() 
+            db.session.add(report)
+            db.session.commit() 
 
         except:
+            
             print "Error in uploading data, rolling back session"
             db.session.rollback()
 
