@@ -39,7 +39,7 @@
 					<div ng-class = "reportClass" >
 
 						
-						<img ng-src = "uploads/{[{data.image}]}" err-src = "static/empty.png"> </img>
+						<img ng-src = "uploads/{[{data.image}]}" err-src = "{{ url_for('static', filename='empty.png') }}"> </img>
 
 
 					</div>
