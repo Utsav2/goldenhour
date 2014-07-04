@@ -35,7 +35,7 @@ class Report(db.Model):
     image  = db.Column(db.String(30))
     id = db.Column(db.String(100), primary_key=True)
 
-    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
+    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=""):
 
         self.type_request = type_request
         self.imei = imei
@@ -47,13 +47,11 @@ class Report(db.Model):
         self.country = country
         self.area = area
         self.locality = locality
+        self.image=image
         self.id = hashlib.sha224(imei + timestamp).hexdigest()
 
     def __repr__(self):
         return self.id
-
-    def set_image(self, path):
-        self.image = path
 
 
 class ReportPicture(db.Model, Image):
@@ -93,7 +91,6 @@ def upload():
         file = request.files.get('image')
         id = hashlib.sha224(imei + time).hexdigest()
 
-        report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         try:
 
             if file and allowed_file(file.filename):
@@ -106,7 +103,11 @@ def upload():
 
                 print "Saved"
 
-                report.set_image(filename)
+                report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, filename)
+
+            else:
+
+                report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
 
 
             db.session.add(report)
