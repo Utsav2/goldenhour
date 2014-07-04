@@ -68,8 +68,6 @@ function reportController($scope){
 	$scope.openReport = function(){
 
 
-		console.log(data);
-
 		//if the report hasnt been opened or been closed before
 
 		if($scope.myMapClass == "map-container-big"){
