@@ -3,7 +3,8 @@ from flask import Flask, render_template, request, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy_imageattach.entity import Image, image_attachment, store_context
+from sqlalchemy_imageattach.entity import Image, image_attachment
+from sqlalchemy_imageattach.context import store_context
 import json
 import hashlib
 
