@@ -93,6 +93,7 @@ def upload():
                     with store_context(store):
                        my_report = db.session.query(Report).get(id)
                        my_report.picture.from_blob(picture_binary)
+                       print "reached"
                 except:
                     print "Couldnt store image"
                     db.session.rollback()
