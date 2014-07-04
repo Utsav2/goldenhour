@@ -13,6 +13,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://avodddfdxytrat:yFn8_7fiQEdlhkhPJ0UjsQukCJ@ec2-54-225-135-30.compute-1.amazonaws.com:5432/df09oj774bls87')
 db = SQLAlchemy(app)
 
+app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 class Report(db.Model):
 
@@ -68,6 +69,8 @@ def upload():
 
     type_request = request.form['Type']
 
+
+
     if type_request == "Internet":
 
         imei = request.form['IMEI']
@@ -92,12 +95,11 @@ def upload():
             if not picture_binary is None:
                 print "first"
                 try:
-                    with store_context(store):
-                        print "Hello"
-                        my_report = db.session.query(Report).get(id)
-                        print "hi again"
-                        my_report.picture.from_blob(picture_binary)
-                        print "reached"
+                    print "Hello"
+                    my_report = db.session.query(Report).get(id)
+                    print "hi again"
+                    #my_report.picture.from_blob(picture_binary)
+                    print "reached"
                 except:
                     print "Couldnt store image"
                     db.session.rollback()
