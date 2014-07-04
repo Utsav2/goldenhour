@@ -16,9 +16,9 @@ db = SQLAlchemy(app)
 class Report(db.Model):
 
     type_request = db.Column(db.String(10))
-    imei = db.Column(db.String)
-    latitude = db.Column(db.String(10))
-    longitude = db.Column(db.String(10))
+    imei = db.Column(db.String(20))
+    latitude = db.Column(db.String(15))
+    longitude = db.Column(db.String(15))
     description = db.Column(db.String(400))
     number = db.Column(db.String(15))
     timestamp = db.Column(db.String(12))
@@ -80,7 +80,10 @@ def upload():
         #picture_url = request.files.get('image')
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         db.session.add(report)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     return jsonify("")
 
