@@ -86,11 +86,17 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        picture_url = request.files.get('image')
+        file = request.files.get('image')
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         try:
             db.session.add(report)
             db.session.commit()
+
+            filename = secure_filename(file.filename)
+
+            # if file and allowed_file(file.filename):
+            #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
         except:
             print "Error in uploading data, rolling back session"
             db.session.rollback()
