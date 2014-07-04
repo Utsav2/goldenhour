@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy_imageattach.entity import Image, image_attachment
+from sqlalchemy_imageattach.entity import Image, image_attachment, store_context
 import json
 import hashlib
 
@@ -89,6 +89,7 @@ def upload():
             db.session.commit()
 
             if not picture_binary is None:
+                print "first"
                 try:
                     with store_context(store):
                         print "Hello"
