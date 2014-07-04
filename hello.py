@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory 
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,6 +32,7 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
+    image  = db.Column(db.String(30))
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
@@ -50,6 +51,9 @@ class Report(db.Model):
 
     def __repr__(self):
         return self.id
+
+    def set_image(self, path):
+        self.image = path
 
 
 class ReportPicture(db.Model, Image):
@@ -87,10 +91,10 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         file = request.files.get('image')
+        id = hashlib.sha224(imei + time).hexdigest()
+
         report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
         try:
-            db.session.add(report)
-            db.session.commit()
 
             if file and allowed_file(file.filename):
 
@@ -102,12 +106,18 @@ def upload():
 
                 print "Saved"
 
+                report.set_image(filename)
+
+
+        db.session.add(report)
+        db.session.commit() 
 
         except:
             print "Error in uploading data, rolling back session"
             db.session.rollback()
 
     return jsonify("")
+
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
