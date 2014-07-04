@@ -79,6 +79,7 @@ def get_number_of_reports():
 def upload():
 
     type_request = request.form['Type']
+
     if type_request == "Internet":
 
         imei = request.form['IMEI']
@@ -116,6 +117,7 @@ def upload():
 
         except:
             print "Error in uploading data"
+            db.session.rollback()
 
     return jsonify("")
 
