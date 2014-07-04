@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
