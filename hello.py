@@ -116,8 +116,6 @@ def upload():
 
         except:
             print "Error in uploading data, rolling back session"
-            db.session.rollback()
-
 
     return jsonify("")
 
