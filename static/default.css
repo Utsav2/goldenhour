@@ -135,6 +135,7 @@ body{
 }
 .menuBar-right {
 	right: 0%;
+	overflow-y:scroll;
 }
 .menuBar-top {
 

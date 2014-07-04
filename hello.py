@@ -91,13 +91,15 @@ def upload():
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
 
-    administrative_area = request.args.get("area")
+    administrative_area = request.args.get("area", '')
 
     country = request.args.get("country")
 
     queries = ""
 
-    if not administrative_area:
+    print administrative_area
+
+    if administrative_area == '':
 
         queries = db.session.query(Report).filter_by(country=country)
 
