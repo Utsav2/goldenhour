@@ -90,7 +90,7 @@ function reportController($scope, data){
 
 			$scope.data.type = report.type;
 
-			if(typeof report.type !== "Internet"){
+			if(report.type === "Internet"){
 
 
 				var pos = new google.maps.LatLng(report.latitude,
@@ -157,7 +157,6 @@ function newReportController($scope, $http, $compile, data){
             url: "/getMineData",
             params: {
               	country: $scope.country,
-               	area : $scope.administrative_area
                	}
            	});
 
@@ -181,6 +180,8 @@ function newReportController($scope, $http, $compile, data){
 
 
 	$scope.addMines = function(text){
+
+		console.log(text.data);
 
 		$scope.reports = text.data;
 

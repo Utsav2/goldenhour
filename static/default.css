@@ -218,7 +218,7 @@ body{
 
 
 
-.report h1, h2, h3{
+.report .report-hidden h1, h2, h3{
 
 
 	font-weight: 300;
@@ -244,8 +244,6 @@ body{
 	background-color: #505759;
 
 	z-index: -10;
-
-
 
 	-webkit-transition: all 0.75s ease;
 	-moz-transition: all 0.75s ease;

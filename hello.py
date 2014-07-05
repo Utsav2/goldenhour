@@ -160,7 +160,7 @@ def uploaded_file(filename):
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
 
-    administrative_area = request.args.get("area")
+    administrative_area = request.args.get("area", "")
 
     country = request.args.get("country")
 
@@ -170,7 +170,7 @@ def initiate():
 
     print type(administrative_area)
 
-    if administrative_area is None:
+    if len(administrative_area) == 0 :
 
         queries = db.session.query(Report).filter_by(country=country)
 
@@ -198,6 +198,7 @@ def initiate():
             my_dict['imei'] = mine.imei
             my_dict['timestamp'] = mine.timestamp
             my_dict['type'] = mine.type_request
+            my_dict['description'] = mine.description
 
         mine_array.append(my_dict)  
 
