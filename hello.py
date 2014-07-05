@@ -39,7 +39,7 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
-    image = db.Column(db.Text)
+    image = db.Column(db.String )
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=None):
@@ -104,7 +104,7 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
-            img_str = file.read().decode('base64')
+            img_str = file.read()
 
             #file_input = open(file)
 
