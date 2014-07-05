@@ -62,6 +62,10 @@ function reportController($scope, data){
 
 	$scope.data = data
 
+	$scope.data.latitude = "";
+
+	$scope.data.longitude = "";
+
 	//initial Position Mumbai
 
 	var position = new google.maps.LatLng(19.075955, 72.87631699999997);
@@ -82,11 +86,11 @@ function reportController($scope, data){
 
 			$scope.data = report
 
-			$scope.data.image = report.image
-
 			$scope.data.description = report.description
 
-			if(typeof report.latitude !== "undefined"){
+			$scope.data.type = report.type;
+
+			if(typeof report.type !== "Internet"){
 
 
 				var pos = new google.maps.LatLng(report.latitude,
@@ -96,7 +100,6 @@ function reportController($scope, data){
 
 			}
 				
-
 	};
 
 	$scope.closeReport = function(){
@@ -123,7 +126,7 @@ function reportController($scope, data){
 
 	$scope.changeUserLocation = function(){
 
-		$scope.toggleReport();
+			$scope.closeReport();
 
 	}
 

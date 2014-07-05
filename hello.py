@@ -56,7 +56,7 @@ class Report(db.Model):
     image = db.Column(db.String )
     id = db.Column(db.String(100), primary_key=True)
 
-    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=None):
+    def __init__(self, type_request, imei, description, number, timestamp, country=None, area=None, locality=None, latitude=None, longitude=None):
 
         self.type_request = type_request
         self.imei = imei
@@ -109,38 +109,8 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         id = hashlib.sha224(imei + time).hexdigest()
-
-        file = request.files.get('image')
-
-        print "GOT FILE"
-
-        if file and allowed_file(file.filename):
-
-            print "IN THE IF BLOCK!"
-
-            print "TRYING TO ENCODE"
-
-            img_str = (file.read().decode('base64')).encode('utf-8', 'ignore')
-
-            #file_input = open(file)
-
-            # print "GOT THE DATA URI"
-
-            # print len(data_uri)
-
-            # in_file = open(file, "rb")
-
-            # data = in_file.read() 
-
-            # in_file.close()
-
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, img_str)
-
-
-        else:
-
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-
+ 
+        report = Report(type_request, imei, description, number, time, country, area, locality, latitude, longitude)
 
         try:
 
@@ -156,8 +126,22 @@ def upload():
             print "Error in uploading data, rolling back session"
             db.session.rollback()
 
-    return jsonify("")
+    elif type_request == "SMS":
+        country = request.form['Country']
+        description = request.form['Description']
+        time = request.form['Time']
+        imei = request.form['IMEI']
+        id = hashlib.sha224(imei + time).hexdigest()
+        report = Report(type_request, imei, description, number, time, country)
+        try:
+            db.session.add(report)
+            db.session.commit() 
+        except Exception:
+            print "Error in uploading data, rolling back session"
+            db.session.rollback()
 
+
+    return jsonify("")
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -174,7 +158,7 @@ def initiate():
 
     queries = ""
 
-    if administrative_area == '':
+    if administrative_area is None:
 
         queries = db.session.query(Report).filter_by(country=country)
 
@@ -194,6 +178,11 @@ def initiate():
             my_dict['longitude'] = mine.longitude
             my_dict['description'] = mine.description
             my_dict['number'] = mine.number
+            my_dict['imei'] = mine.imei
+            my_dict['timestamp'] = mine.timestamp
+            my_dict['type'] = mine.type_request
+
+        elif mine.type_request=="SMS":
             my_dict['imei'] = mine.imei
             my_dict['timestamp'] = mine.timestamp
             my_dict['type'] = mine.type_request

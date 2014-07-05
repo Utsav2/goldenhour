@@ -37,10 +37,14 @@
 					</div>
 
 					<div ng-class = "reportClass" >
-						
-						<img ng-src = "uploads/{[{data.image}]}" err-src = "{{ url_for('static', filename='empty.png') }}"> </img>
 
-						<h1> {[{ data.description }]} </h1>
+						<h1> {[{ data.type }]} report </h1>
+
+						<h2> {[{ data.time_formatted }]}</h2>
+
+						<h2> Description: {[{ data.description }]} </h2>
+
+						<h3> {[{ data.latitude}]}, {[{ data.longitude}]} </h3>
 
 					</div>
 
@@ -79,10 +83,10 @@
 
 					<nav class = "menuBar menuBar-horizontal" ng-class = "myFooterClass">
 
-						<a href="#">settings</a>
+						<a href="#">delete</a>
 						<a href="#">block user</a>
-						<a href="#">thank user</a>
-						<a href="#">dispatch authority</a>
+						<a href="#">alert people</a>
+						<a href="#">alert authority</a>
 
 					</nav>
 	 
