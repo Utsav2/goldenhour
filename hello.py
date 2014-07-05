@@ -36,7 +36,7 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
-    image = db.Column(db.String(500000))
+    image = db.Column(db.Text)
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=None):
@@ -101,11 +101,11 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
-            # mimetype = file.content_type
+            mimetype = file.content_type
 
-            # img_str = file.read().encode('base64').replace('\n', '')
+            img_str = file.read().encode('base64').replace('\n', '')
 
-            # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
             #file_input = open(file)
 
@@ -121,7 +121,8 @@ def upload():
 
             print "COMPLETED"
 
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
+
 
         else:
 
