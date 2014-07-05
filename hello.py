@@ -166,11 +166,15 @@ def initiate():
 
     queries = ""
 
+    print administrative_area
+
+    print type(administrative_area)
+
     if administrative_area is None:
 
         queries = db.session.query(Report).filter_by(country=country)
 
-    else :
+    else:
 
         queries = db.session.query(Report).filter_by(country=country, area=administrative_area)
 
