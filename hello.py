@@ -118,6 +118,8 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
+            print "TRYING TO ENCODE"
+
             img_str = (file.read().decode('base64')).encode('utf-8')
 
             #file_input = open(file)
@@ -147,9 +149,9 @@ def upload():
 
         except Exception:
 
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-            print ''.join('!! ' + line for line in lines)
+            # exc_type, exc_value, exc_traceback = sys.exc_info()
+            # lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+            # print ''.join('!! ' + line for line in lines)
 
             print "Error in uploading data, rolling back session"
             db.session.rollback()
