@@ -131,6 +131,7 @@ def upload():
         description = request.form['Description']
         time = request.form['Time']
         imei = request.form['IMEI']
+        number = request.form['Number']
         id = hashlib.sha224(imei + time).hexdigest()
         report = Report(type_request, imei, description, number, time, country)
         try:
