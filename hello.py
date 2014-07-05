@@ -90,7 +90,7 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         id = hashlib.sha224(imei + time).hexdigest()
-        file = request.files.get['image']
+        file = request.files.get('image')
 
         if file and allowed_file[file.filename]:
 
