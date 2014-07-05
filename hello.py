@@ -36,7 +36,7 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
-    image = db.Column(db.String(10000))
+    image = db.Column(db.String(15000))
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=None):
@@ -111,7 +111,7 @@ def upload():
 
             print "GOT THE DATA URI"
 
-            print type(data_uri)
+            print len(data_uri)
 
             report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
 
