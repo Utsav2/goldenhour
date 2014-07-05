@@ -14,6 +14,7 @@ db = SQLAlchemy(app)
 
 #regards to http://runnable.com/UiPcaBXaxGNYAAAL/how-to-upload-a-file-to-the-server-in-flask-for-python
 #for images
+
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -34,7 +35,7 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
-    image  = db.Column(db.String(30))
+    image  = db.Column(db.String(12000))
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=""):
@@ -90,21 +91,18 @@ def upload():
         country = address["Country"]
         area = address["Administrative Area"]
         locality = address["Locality"]
-        file = request.files.get('image')
         id = hashlib.sha224(imei + time).hexdigest()
+        file = request.files.get['image']
 
+        if file and allowed_file[file.filename]:
 
-        if file and allowed_file(file.filename):
+            mimetype = file.content_type
 
-            filename = secure_filename(file.filename)
+            img_str = img_stream.read().encode('base64').replace('\n', '')
 
-            print filename
+            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            print "Saved"
-
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, filename)
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
 
         else:
 
