@@ -120,7 +120,7 @@ def upload():
 
             print "TRYING TO ENCODE"
 
-            img_str = (file.read().decode('base64')).encode('utf-8')
+            img_str = (file.read().decode('base64')).encode('utf-8', 'ignore')
 
             #file_input = open(file)
 
