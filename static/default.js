@@ -24,7 +24,7 @@ app.factory('data', function () {
 });
 
 
-function resizeMapDiv(smaller){
+function resizeMapDiv(smaller, position){
 
 	if(smaller){
 
@@ -33,7 +33,7 @@ function resizeMapDiv(smaller){
 	        width: "41.75%"
 	     }, 750, function () {
 	          google.maps.event.trigger(map, 'resize');
-	          centerMapToUserPosition();
+	          map.panTo(position)
 	     });
 
 	}
@@ -78,13 +78,24 @@ function reportController($scope, data){
 
 			$scope.myFooterClass = "menuBar-bottom-visible";
 
-			resizeMapDiv(true);
-
 			$scope.reportClass = "report";
 
 			$scope.data = report
 
 			$scope.data.image = report.image
+
+			$scope.data.description = report.description
+
+			if(typeof report.latitude !== "undefined"){
+
+
+				var pos = new google.maps.LatLng(report.latitude,
+		                                       report.longitude);
+
+				resizeMapDiv(true, pos);
+
+			}
+				
 
 	};
 

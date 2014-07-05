@@ -93,24 +93,25 @@ def upload():
         file = request.files.get('image')
         id = hashlib.sha224(imei + time).hexdigest()
 
+
+        if file and allowed_file(file.filename):
+
+            filename = secure_filename(file.filename)
+
+            print filename
+
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            print "Saved"
+
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, filename)
+
+        else:
+
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+
+
         try:
-
-            if file and allowed_file(file.filename):
-
-                filename = secure_filename(file.filename)
-
-                print filename
-
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-                print "Saved"
-
-                report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, filename)
-
-            else:
-
-                report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
-
 
             db.session.add(report)
             db.session.commit() 
