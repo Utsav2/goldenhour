@@ -127,6 +127,7 @@ def upload():
             db.session.rollback()
 
     elif type_request == "SMS":
+        print "reached here"
         country = request.form['Country']
         description = request.form['Description']
         time = request.form['Time']
