@@ -51,6 +51,7 @@ class Report(db.Model):
         self.country = country
         self.area = area
         self.locality = locality
+        self.image = image
         self.id = hashlib.sha224(imei + timestamp).hexdigest()
 
 
