@@ -101,23 +101,27 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
-            mimetype = file.content_type
+            # mimetype = file.content_type
 
-            img_str = file.read().encode('base64').replace('\n', '')
+            # img_str = file.read().encode('base64').replace('\n', '')
 
-            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+            # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
             #file_input = open(file)
 
-            print "GOT THE DATA URI"
+            # print "GOT THE DATA URI"
 
-            print len(data_uri)
+            # print len(data_uri)
 
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
+            in_file = open(file, "rb")
 
-            print "REPORT GOT THE IMAGE"
+            data = in_file.read() 
 
-            print id
+            in_file.close()
+
+            print "COMPLETED"
+
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
 
         else:
 
