@@ -126,7 +126,7 @@ def upload():
             print "Error in uploading data, rolling back session"
             db.session.rollback()
 
-    else if type_request == "SMS":
+    elif type_request == "SMS":
         country = request.form['Country']
         description = request.form['Description']
         time = request.form['Time']
