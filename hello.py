@@ -92,21 +92,23 @@ def upload():
         locality = address["Locality"]
         id = hashlib.sha224(imei + time).hexdigest()
 
-        print "Reached here"
-
         file = request.files.get('image')
+
+        print "GOT FILE"
 
         if file and allowed_file[file.filename]:
 
+            print "IN THE IF BLOCK!"
+
             mimetype = file.content_type
 
-            img_str = file.read().encode('base64').replace('\n', '')
+            # img_str = file.read().encode('base64').replace('\n', '')
 
-            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+            # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
             #file_input = open(file)
 
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
 
         else:
 
