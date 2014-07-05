@@ -103,9 +103,9 @@ def upload():
 
             mimetype = file.content_type
 
-            img_str = file.read().encode('base64').replace('\n', '')
+            img_str = file.read()
 
-            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+            print len(img_str)
 
             #file_input = open(file)
 
