@@ -35,7 +35,6 @@ class Report(db.Model):
     country = db.Column(db.String(30))
     area = db.Column(db.String(30))
     locality = db.Column(db.String(30))
-    image  = db.Column(db.Binary)
     id = db.Column(db.String(100), primary_key=True)
 
     def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
@@ -59,9 +58,7 @@ class Report(db.Model):
 class ReportPicture(db.Model, Image):
 
     user_id = db.Column(db.String, db.ForeignKey('report.id'), primary_key=True)
-    user = db.relationship('Report')
-
-
+    user = db.relationship('Report')    
 
 
 @app.route('/')
