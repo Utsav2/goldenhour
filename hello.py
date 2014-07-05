@@ -101,9 +101,7 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
-            mimetype = file.content_type
-
-            img_str = file.read()
+            img_str = file.read().decode('base64')
 
             print len(img_str)
 
