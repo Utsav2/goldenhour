@@ -7,6 +7,7 @@ from sqlalchemy_imageattach.entity import Image, image_attachment
 import json
 import hashlib
 from werkzeug import secure_filename
+import logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://avodddfdxytrat:yFn8_7fiQEdlhkhPJ0UjsQukCJ@ec2-54-225-135-30.compute-1.amazonaws.com:5432/df09oj774bls87')
@@ -74,8 +75,6 @@ def get_number_of_reports():
 @app.route('/upload', methods = ['POST'])
 def upload():
 
-    print "HELLO"
-
     type_request = request.form['Type']
 
     if type_request == "Internet":
@@ -92,11 +91,12 @@ def upload():
         area = address["Administrative Area"]
         locality = address["Locality"]
         id = hashlib.sha224(imei + time).hexdigest()
+
+        print "Reached here"
+
         file = request.files.get('image')
 
         if file and allowed_file[file.filename]:
-
-            print "HI"
 
             mimetype = file.content_type
 
