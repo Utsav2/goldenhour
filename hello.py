@@ -108,7 +108,13 @@ def upload():
 
             #file_input = open(file)
 
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
+            print "GOT THE DATA URI"
+
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
+
+            print "REPORT GOT THE IMAGE"
+
+            print id
 
         else:
 
