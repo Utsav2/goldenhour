@@ -10,6 +10,7 @@ from werkzeug import secure_filename
 import logging
 import sys
 import traceback
+from sqlalchemy.types import TypeDecorator, Unicode
 
 
 app = Flask(__name__)
@@ -25,6 +26,19 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+
+class CoerceUTF8(TypeDecorator):
+    """Safely coerce Python bytestrings to Unicode
+    before passing off to the database."""
+
+    impl = Unicode
+
+    def process_bind_param(self, value, dialect):
+        if isinstance(value, str):
+            value = value.decode('utf-8')
+        return value
+
 
 
 class Report(db.Model):
@@ -105,6 +119,8 @@ def upload():
             print "IN THE IF BLOCK!"
 
             img_str = file.read()
+
+            img_str = img_str.encode('utf-8')
 
             #file_input = open(file)
 
