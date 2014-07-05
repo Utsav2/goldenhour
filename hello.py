@@ -111,6 +111,8 @@ def upload():
 
             print "GOT THE DATA URI"
 
+            print type(data_uri)
+
             report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
 
             print "REPORT GOT THE IMAGE"
