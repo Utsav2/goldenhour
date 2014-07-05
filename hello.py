@@ -129,10 +129,15 @@ def upload():
     elif type_request == "SMS":
         print "reached here"
         country = request.form['Country']
+        print "reached here"
         description = request.form['Description']
+        print "reached here"
         time = request.form['Time']
+        print "reached here"
         imei = request.form['IMEI']
+        print "reached here"
         number = request.form['Number']
+        print "reached here"
         id = hashlib.sha224(imei + time).hexdigest()
         report = Report(type_request, imei, description, number, time, country)
         try:
