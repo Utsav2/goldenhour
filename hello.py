@@ -100,11 +100,11 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
-            # mimetype = file.content_type
+            mimetype = file.content_type
 
-            # img_str = file.read().encode('base64').replace('\n', '')
+            img_str = file.read().encode('base64').replace('\n', '')
 
-            # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
             #file_input = open(file)
 
