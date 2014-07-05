@@ -96,11 +96,11 @@ def upload():
 
         print "GOT FILE"
 
-        if file and allowed_file[file.filename]:
+        if file and allowed_file(file.filename):
 
             print "IN THE IF BLOCK!"
 
-            mimetype = file.content_type
+            # mimetype = file.content_type
 
             # img_str = file.read().encode('base64').replace('\n', '')
 
