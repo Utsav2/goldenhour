@@ -96,11 +96,11 @@ def upload():
 
         if file and allowed_file[file.filename]:
 
-            mimetype = file.content_type
+            # mimetype = file.content_type
 
-            img_str = file.read().encode('base64').replace('\n', '')
+            # img_str = file.read().encode('base64').replace('\n', '')
 
-            data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+            # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
             report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
 
