@@ -103,8 +103,6 @@ def upload():
 
             img_str = file.read().decode('base64')
 
-            print (img_str)
-
             #file_input = open(file)
 
             # print "GOT THE DATA URI"
@@ -116,8 +114,6 @@ def upload():
             # data = in_file.read() 
 
             # in_file.close()
-
-            print "COMPLETED"
 
             report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, img_str)
 
