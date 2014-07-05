@@ -103,7 +103,7 @@ def upload():
 
             img_str = file.read().decode('base64')
 
-            print len(img_str)
+            print (img_str)
 
             #file_input = open(file)
 
@@ -132,7 +132,11 @@ def upload():
             db.session.add(report)
             db.session.commit() 
 
-        except:
+        except Exception:
+
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+            print ''.join('!! ' + line for line in lines)
 
             print "Error in uploading data, rolling back session"
             db.session.rollback()
