@@ -121,7 +121,7 @@ def upload():
 
             print "COMPLETED"
 
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, img_str)
 
 
         else:
