@@ -138,7 +138,9 @@ def upload():
         number = request.form['Number']
         print "reached here"
         id = hashlib.sha224(imei + time).hexdigest()
+        print "reached here"
         report = Report(type_request, imei, description, number, time, country)
+        print "reached here"
         try:
             db.session.add(report)
             db.session.commit() 
