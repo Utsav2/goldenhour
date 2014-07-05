@@ -38,7 +38,7 @@ class Report(db.Model):
     image = db.Column(db.Binary)
     id = db.Column(db.String(100), primary_key=True)
 
-    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image):
+    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality):
 
         self.type_request = type_request
         self.imei = imei
@@ -51,7 +51,7 @@ class Report(db.Model):
         self.area = area
         self.locality = locality
         self.id = hashlib.sha224(imei + timestamp).hexdigest()
-        self.image = image
+
 
     def __repr__(self):
         return self.id
