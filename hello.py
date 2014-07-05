@@ -102,8 +102,7 @@ def upload():
 
             # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
-
-            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality, data_uri)
+            report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
 
         else:
 
