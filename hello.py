@@ -113,11 +113,11 @@ def upload():
 
             # print len(data_uri)
 
-            in_file = open(file, "rb")
+            # in_file = open(file, "rb")
 
-            data = in_file.read() 
+            # data = in_file.read() 
 
-            in_file.close()
+            # in_file.close()
 
             print "COMPLETED"
 
