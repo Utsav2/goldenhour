@@ -131,6 +131,12 @@ function reportController($scope, data){
 	}
 
 
+	$scope.deleteReport = function(){
+
+		console.log('HI');
+
+	}
+
 }
 
 function newReportController($scope, $http, $compile, data){

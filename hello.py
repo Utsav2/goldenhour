@@ -157,6 +157,20 @@ def uploaded_file(filename):
                                filename)
 
 
+@app.route('/deleteMineData', methods=['GET'])
+def delete_mine():
+
+    imei = request.args.get('IMEI')
+
+    time = request.args.get('Time')
+
+    id = hashlib.sha224(imei + time).hexdigest()
+
+    delete_mine = db.session.query(Report).filter_by(id = id).first()
+
+    db.session.delete(delete_mine)
+
+
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
 
