@@ -98,7 +98,7 @@ def upload():
 
             mimetype = file.content_type
 
-            img_str = img_stream.read().encode('base64').replace('\n', '')
+            img_str = file.read().encode('base64').replace('\n', '')
 
             data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
 
