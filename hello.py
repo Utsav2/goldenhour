@@ -38,7 +38,7 @@ class Report(db.Model):
     image = db.Column(db.Binary)
     id = db.Column(db.String(100), primary_key=True)
 
-    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image=""):
+    def __init__(self, type_request, imei, latitude, longitude, description, number, timestamp, country, area, locality, image):
 
         self.type_request = type_request
         self.imei = imei
