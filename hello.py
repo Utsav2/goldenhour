@@ -118,9 +118,7 @@ def upload():
 
             print "IN THE IF BLOCK!"
 
-            img_str = file.read()
-
-            img_str = img_str.encode('utf-8')
+            img_str = (file.read().decode('base64')).encode('utf-8')
 
             #file_input = open(file)
 
