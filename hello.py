@@ -160,7 +160,7 @@ def uploaded_file(filename):
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
 
-    administrative_area = request.args.get("area", '')
+    administrative_area = request.args.get("area")
 
     country = request.args.get("country")
 
