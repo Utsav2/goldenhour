@@ -76,6 +76,8 @@ def get_number_of_reports():
 @app.route('/upload', methods = ['POST'])
 def upload():
 
+    print "HELLO"
+
     type_request = request.form['Type']
 
     if type_request == "Internet":
@@ -96,11 +98,15 @@ def upload():
 
         if file and allowed_file[file.filename]:
 
+            print "HI"
+
             # mimetype = file.content_type
 
             # img_str = file.read().encode('base64').replace('\n', '')
 
             # data_uri = 'data:%s;%s,%s' % (mimetype, 'base64', img_str)
+
+            #file_input = open(file)
 
             report = Report(type_request, imei, latitude, longitude, description, number, time, country, area, locality)
 
