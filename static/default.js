@@ -29,8 +29,8 @@ function resizeMapDiv(smaller, position){
 	if(smaller){
 
 		 $("#map-container").animate({
-	        height: '80%',
-	        width: "41.75%"
+	        height: '90%',
+	        width: "52.0875%"
 	     }, 750, function () {
 	          google.maps.event.trigger(map, 'resize');
 	          map.panTo(position)
@@ -42,23 +42,25 @@ function resizeMapDiv(smaller, position){
 
 		$("#map-container").animate({
 		    height: '90%',
-		    width: "84%"
+		    width: "83.4%"
 		}, 750, function () {
 		    google.maps.event.trigger(map, 'resize');
-		    centerMapToUserPosition();
+
 		});
 
 	}
 
 }
 
-function reportController($scope, data){
+function reportController($scope, $http, data){
 
 	$scope.myMapClass = "map-container-big";
 
 	$scope.myFooterClass = "menuBar-bottom";
 
 	$scope.reportClass = "report-hidden";
+
+	$scope.LocationView = "locationChangerInvisible"
 
 	$scope.data = data
 
@@ -70,35 +72,103 @@ function reportController($scope, data){
 
 	var position = new google.maps.LatLng(19.075955, 72.87631699999997);
 
+	//creating an array of positions for USA India Afghanistan Somalia. This for demonstration purposes
+
+	$scope.places = [];
+
+	//INDIA
+
+	$scope.places.push(new google.maps.LatLng(19.075955, 72.87631699999997));
+
+	//National Defense Uni
+
+	$scope.places.push(new google.maps.LatLng(38.8660, -77.0150));
+
+	//USA
+
+	$scope.places.push(new google.maps.LatLng(40.7127, -74.0059));
+
+	//Afganistan
+
+	$scope.places.push(new google.maps.LatLng(34.5333, 69.1333));
+
+	//Somalia
+
+	$scope.places.push(new google.maps.LatLng(2.0333, 45.3500));
+
+
 	createGoogleMap(position);
 
 	//centerMapToUser returns user position or initial position ^
+
+	$scope.data.number_of_reports = 0;
 
 	centerMapToUserPosition(position);
 
 	$scope.openReport = function(report){
 
+		$scope.closeLocationViewer();	
+
+		$scope.myFooterClass = "menuBar-bottom-visible";
+
+		$scope.reportClass = "report";
+
+		$scope.data.description = report.description
+
+		$scope.data.type = report.type;
+
+		$scope.data.imei = report.imei;
+
+		$scope.data.timestamp = report.timestamp
+
+		$scope.data.latitude = "";
+
+		$scope.data.longitude = "";
+
+
+		//Internet Report or modifed SMS report
+
+		if(typeof report.latitude !== "undefined"){
+
+			$scope.lastMarker = $scope.marker;
+
 			$scope.myMapClass = "map-container-small";
 
-			$scope.myFooterClass = "menuBar-bottom-visible";
+			var pos = new google.maps.LatLng(report.latitude,
+	                                       report.longitude);
 
-			$scope.reportClass = "report";
+			resizeMapDiv(true, pos);
 
-			$scope.data = report
+			if(typeof $scope.lastMarker !== "undefined")
+				$scope.lastMarker.setMap(null);
 
-			$scope.data.description = report.description
+			$scope.lastMarker = $scope.marker;
 
-			$scope.data.type = report.type;
+			$scope.marker = new google.maps.Marker({
 
-			if(report.type === "Internet"){
+		    	position: pos,
+			    map: map,
+		        title: report.description
+
+		  	});
 
 
-				var pos = new google.maps.LatLng(report.latitude,
-		                                       report.longitude);
+			$scope.data.latitude = report.latitude;
 
-				resizeMapDiv(true, pos);
+			$scope.data.longitude = report.longitude;
 
-			}
+		}
+		else{
+
+			if(typeof $scope.marker !== "undefined")
+				$scope.marker.setMap(null);
+
+			$scope.myMapClass = "map-container-big";
+
+			resizeMapDiv(false);
+
+
+		}
 				
 	};
 
@@ -111,6 +181,10 @@ function reportController($scope, data){
 		resizeMapDiv(false);
 
 		$scope.reportClass = "report-hidden";
+
+		if(typeof $scope.marker !== "undefined")
+			$scope.marker.setMap(null);
+
 
 	}
 
@@ -126,16 +200,79 @@ function reportController($scope, data){
 
 	$scope.changeUserLocation = function(){
 
-			$scope.closeReport();
+		$scope.closeReport();
+
+		$('#map').addClass('blurred');
+
+		$scope.LocationView = "locationChangerVisible"
+
+	}
+
+	$scope.changeTo = function(pos){
+
+
+		$scope.UserPosition = $scope.places[pos];
+
+	}
+
+	$scope.closeLocationViewer = function(){
+
+		$('#map').removeClass('blurred');
+
+		$scope.LocationView = "locationChangerInvisible"
 
 	}
 
 
 	$scope.deleteReport = function(){
 
-		console.log('HI');
+	var request = $http({
+
+        method: "get",
+        url: "/deleteMineData",
+        params: {
+          	IMEI: $scope.data.imei,
+          	Time: $scope.data.timestamp
+           	}
+       	});
+
+	request.then(
+
+			function(){
+
+				console.log('success');
+
+				window.location.reload();
+			}
+
+			,
+
+			function(){
+
+				console.log('error');
+			}
+
+		);
+	}
+
+	$scope.addMarker = function(mine){
+
+		if(mine.latitude == "undefined")
+			return;
+
+		var latlng = new google.maps.LatLng(mine.latitude, mine.longitude);
+
+		var marker = new google.maps.Marker({
+
+	      position: latlng,
+	      map: map,
+	      title: mine.description
+
+	  	});
 
 	}
+
+	
 
 }
 
@@ -182,12 +319,12 @@ function newReportController($scope, $http, $compile, data){
 
 		map.panTo($scope.UserPosition);
 
+		map.setZoom(10);
+
    	});
 
 
 	$scope.addMines = function(text){
-
-		console.log(text.data);
 
 		$scope.reports = text.data;
 
@@ -195,9 +332,13 @@ function newReportController($scope, $http, $compile, data){
 
 			$scope.reports[i].time_formatted = formatTime($scope.reports[i]);
 
-			addMarker($scope.reports[i]);
+
+
+			//$scope.addMarker($scope.reports[i]);
 
 		}
+
+		$scope.data.number_of_reports = $scope.reports.length;
 
 	}
 
@@ -447,24 +588,6 @@ function addAddressComponent(builder, type_of_component, address){
 	}
 
 	return "";
-
-}
-
-
-function addMarker(mine){
-
-	if(mine.type == "SMS" && typeof mine.latitude == "undefined")
-		return;
-
-	var latlng = new google.maps.LatLng(mine.latitude, mine.longitude);
-
-	var marker = new google.maps.Marker({
-
-      position: latlng,
-      map: map,
-      title: mine.description
-
-  	});
 
 }
 

@@ -34,6 +34,16 @@
 
 						</div>
 
+						<div class = "map-container-big" ng-class = "LocationView">
+
+							<a ng-click="changeTo(0)">India</a>
+							<a ng-click="changeTo(1)">National Defense University</a> 
+							<a ng-click="changeTo(2)">USA</a> 
+							<a ng-click="changeTo(3)">Afghanistan</a>  
+							<a ng-click="changeTo(4)">Somalia</a>
+
+						</div>
+
 					</div>
 
 					<div ng-class = "reportClass" >
@@ -42,16 +52,18 @@
 
 						<h2> {[{ data.time_formatted }]}</h2>
 
-						<h2> Description: {[{ data.description }]} </h2>
+						<h2> {[{ data.description }]} </h2>
 
-						<h3> {[{ data.latitude}]}, {[{ data.longitude}]} </h3>
+						<h3> {[{ data.latitude}]}    {[{ data.longitude}]} </h3>
+
+						<h3> {[{ locationAdder }]} </h3>
 
 					</div>
 
 					<nav class = "menuBar menuBar-vertical menuBar-right" ng-controller="newReportController" >
 						<h3>
 
-							<img src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
+							<img ng-src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
 
 							</img>
 
@@ -59,7 +71,7 @@
 
 						</h3>
 
-					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport(report)" ng-model="data.name">
+					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport(report)" ng-model="data.name" >
 
 					{[{ 
 
@@ -74,16 +86,17 @@
 
 					</nav>
 
-					<nav class = "menuBar menuBar-horizontal menuBar-top">
+					<nav class = "menuBar menuBar-horizontal menuBar-top" >
 						
-						<h3 href="#" update>{[{data.number_of_reports}]}</h3>
+						<!--h3 href="#">{[{data.number_of_reports}]} new</h3-->
 
 						<h3 href="#" ng-click="changeUserLocation()" style="cursor:pointer;">{[{ location_data_text }]}</h3>
+
 					</nav>
 
 					<nav class = "menuBar menuBar-horizontal" ng-class = "myFooterClass">
 
-						<a href="#" ng-click = "delete-report">delete</a>
+						<a href="#" ng-click = "deleteReport()">delete</a>
 						<a href="#">block user</a>
 						<a href="#">alert people</a>
 						<a href="#">alert authority</a>

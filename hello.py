@@ -3,14 +3,12 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy_imageattach.entity import Image, image_attachment
 import json
 import hashlib
 from werkzeug import secure_filename
 import logging
 import sys
 import traceback
-from sqlalchemy.types import TypeDecorator, Unicode
 
 
 app = Flask(__name__)
@@ -26,19 +24,6 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
-
-
-class CoerceUTF8(TypeDecorator):
-    """Safely coerce Python bytestrings to Unicode
-    before passing off to the database."""
-
-    impl = Unicode
-
-    def process_bind_param(self, value, dialect):
-        if isinstance(value, str):
-            value = value.decode('utf-8')
-        return value
-
 
 
 class Report(db.Model):
@@ -75,10 +60,17 @@ class Report(db.Model):
         return self.id
 
 
-class ReportPicture(db.Model, Image):
+class Number(db.Model):
 
-    user_id = db.Column(db.String, db.ForeignKey('report.id'), primary_key=True)
-    user = db.relationship('Report')    
+    type_number = db.Column(db.String(10))
+    number = db.Column(db.String(15), primary_key=True)
+
+    def __init__(self, type_number, number):
+        self.type_number = type_number
+        self.number=number
+
+    def __repr__(self):
+        return self.number
 
 
 @app.route('/')
@@ -151,6 +143,7 @@ def upload():
 
     return jsonify("")
 
+
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
@@ -168,8 +161,35 @@ def delete_mine():
 
     delete_mine = db.session.query(Report).filter_by(id = id).first()
 
-    db.session.delete(delete_mine)
+    try:
 
+        db.session.delete(delete_mine)
+
+        db.session.commit()
+
+    except:
+
+        db.session.rollback()
+
+    return jsonify("")
+
+
+@app.route('/register', methods = ['GET'])
+def register():
+
+    type_number = request.type["Type"]
+    number = request.form["Number"]
+
+    number_ = Number(type_number, number)
+
+    try:
+        db.session.add(number_)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        print "Error in registering"
+
+    return jsonify("");
 
 @app.route('/getMineData', methods = ['GET'])
 def initiate():
@@ -180,17 +200,13 @@ def initiate():
 
     queries = ""
 
-    print administrative_area
-
-    print type(administrative_area)
-
     if len(administrative_area) == 0 :
 
-        queries = db.session.query(Report).filter_by(country=country)
+        queries = db.session.query(Report).filter(Report.country.ilike(country))
 
     else:
 
-        queries = db.session.query(Report).filter_by(country=country, area=administrative_area)
+        queries = db.session.query(Report).filter(Report.country.ilike(country), Report.area.ilike(area))
 
 
     mine_array = []
