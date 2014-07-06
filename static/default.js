@@ -270,9 +270,7 @@ function reportController($scope, $http, data){
 
 	  	});
 
-	}
-
-	
+	}	
 
 }
 
@@ -281,6 +279,11 @@ function newReportController($scope, $http, $compile, data){
 
 	//This watches if the user position has changed. If it does, it gets the new administrative area and makes the ajax call to server
 
+	$scope.workingOnRequest = false;
+
+	$scope.logo = "/static/loader.png";
+
+	$scope.logoAjax = "/static/loading_gif_new.gif";
 
 	$scope.$watch('UserPosition', function() {
 
@@ -293,6 +296,8 @@ function newReportController($scope, $http, $compile, data){
 
 			if(typeof $scope.country === "undefined")
 				return;
+
+			$scope.workingOnRequest = true;
 
 			var request = $http({
 
@@ -310,6 +315,8 @@ function newReportController($scope, $http, $compile, data){
 				function(){
 
 					console.log('error');
+
+					$scope.workingOnRequest = false;
 
 				}
 
@@ -332,31 +339,58 @@ function newReportController($scope, $http, $compile, data){
 
 			$scope.reports[i].time_formatted = formatTime($scope.reports[i]);
 
-
-
-			//$scope.addMarker($scope.reports[i]);
-
 		}
 
 		$scope.data.number_of_reports = $scope.reports.length;
 
+		$scope.workingOnRequest = false;
+
 	}
 
-
 }
 
-function getNumberOfReports(position){
+app.directive('ajax', function(){
 
-	return _number_of_reports;
+	return{
 
-}
+		link: function (scope){
 
-function setNumberOfReports(newNumber){
+			scope.$watch('workingOnRequest', function(value){
 
-	_number_of_reports = newNumber;
+				//console.log(value);
 
+				if(value){
 
-}
+					console.log('ajax');
+
+					var temp = scope.logo;
+
+					scope.logo = scope.logoAjax;
+
+					scope.logoAjax = temp;
+				}
+
+				else{
+
+					console.log('logo');
+
+					var temp = scope.logoAjax;
+
+					scope.logoAjax = scope.logo;
+
+					scope.logo = temp;
+
+				}
+
+				setTimeout(function(){scope.$apply();}, 1000);
+
+			});
+
+		}
+
+	}
+
+});
 
 function createGoogleMap(position) {
 

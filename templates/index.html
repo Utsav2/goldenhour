@@ -63,7 +63,7 @@
 					<nav class = "menuBar menuBar-vertical menuBar-right" ng-controller="newReportController" >
 						<h3>
 
-							<img ng-src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu">
+							<img ng-src = "{[{logo}]}" class = "logo-menu" ajax>
 
 							</img>
 
@@ -73,23 +73,14 @@
 
 					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport(report)" ng-model="data.name" >
 
-					{[{ 
-
-
-						report.time_formatted
-
-
-					}]}
-
+					{[{ report.time_formatted }]}
+					
 					</a>
 
 
 					</nav>
 
 					<nav class = "menuBar menuBar-horizontal menuBar-top" >
-						
-						<!--h3 href="#">{[{data.number_of_reports}]} new</h3-->
-
 						<h3 href="#" ng-click="changeUserLocation()" style="cursor:pointer;">{[{ location_data_text }]}</h3>
 
 					</nav>
