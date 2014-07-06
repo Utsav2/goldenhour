@@ -281,7 +281,9 @@ function newReportController($scope, $http, $compile, data){
 
 	$scope.workingOnRequest = false;
 
-	$scope.logo = "/static/loader.png";
+	$scope.logoNormal = "/static/loader.png";
+
+	$scope.logo = $scope.logoNormal;
 
 	$scope.logoAjax = "/static/loading_gif_new.gif";
 
@@ -361,28 +363,19 @@ app.directive('ajax', function(){
 
 				if(value){
 
-					console.log('ajax');
-
-					var temp = scope.logo;
-
 					scope.logo = scope.logoAjax;
 
-					scope.logoAjax = temp;
+					setTimeout(function(){scope.$apply();}, 3000);
 				}
 
 				else{
 
-					console.log('logo');
+					scope.logo = scope.logoNormal;
 
-					var temp = scope.logoAjax;
-
-					scope.logoAjax = scope.logo;
-
-					scope.logo = temp;
+					setTimeout(function(){scope.$apply();}, 3000);
 
 				}
 
-				setTimeout(function(){scope.$apply();}, 1000);
 
 			});
 
@@ -575,7 +568,9 @@ function updateLocationAddressValue(address){
 
 	var builder = "";
 
-	builder += addAddressComponent(builder, "administrative_area_level_2", address) +", "
+	bigger_area = addAddressComponent(builder, "administrative_area_level_2", address)
+
+	builder += bigger_area +  ", "
 
 	administrative_area = addAddressComponent(builder, "administrative_area_level_1", address)
 

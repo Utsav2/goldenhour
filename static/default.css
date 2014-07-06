@@ -73,6 +73,10 @@ body{
 	font-weight: 300;
 	background: #333333;
 	opacity: 0.8;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+
 }
 
 .menuBar a {
@@ -83,6 +87,10 @@ body{
 	font-size: 1.1em;
 	font-weight: 300;
 	opacity: 0.8;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+
 }
 
 .menuBar a:hover {
@@ -143,7 +151,6 @@ body{
 	Aborder-bottom: 1px solid #fa8d70;
 	background-color:#474747;
 	padding: 2em;
-
 
 }
 .menuBar-right {
@@ -285,6 +292,8 @@ body{
 
 .locationChangerVisible{
 
+	font-weight: 300;
+
 	z-index:100;
 
 	text-align: left;
@@ -296,9 +305,9 @@ body{
 	-webkit-transition-delay: 1.5s; /* Safari */
     transition-delay: 1.5s;
 
-	-webkit-transition: all 2.5s ease;
-	-moz-transition: all 2.5s ease;
-	transition: all 2.5s ease;
+	-webkit-transition: all 1.5s ease;
+	-moz-transition: all 1.5s ease;
+	transition: all 1.5s ease;
 
 
 }
@@ -331,6 +340,8 @@ body{
 
 
 .locationChangerInvisible{
+
+	font-weight: 300;
 
 	z-index:-100;
 
