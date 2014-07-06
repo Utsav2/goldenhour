@@ -63,7 +63,7 @@
 					<nav class = "menuBar menuBar-vertical menuBar-right" ng-controller="newReportController" >
 						<h3>
 
-							<img ng-src = "{[{logo}]}" class = "logo-menu" ajax>
+							<img ng-src = "{{ url_for('static', filename='loader.png') }}" class = "logo-menu" ajax = "{{ url_for('static', filename='loading_gif_new.gif') }}">
 
 							</img>
 
