@@ -319,30 +319,7 @@ function newReportController($scope, $http, $compile, data){
 			if(typeof $scope.country === "undefined")
 				return;
 
-			$scope.workingOnRequest = true;
-
-			var request = $http({
-
-            method: "get",
-            url: "/getMineData",
-            params: {
-              	country: $scope.country,
-               	}
-           	});
-
-			//It passes the function addMines on success of receiving data
-
-			request.then($scope.addMines,
-
-				function(){
-
-					console.log('error');
-
-					$scope.workingOnRequest = false;
-
-				}
-
-			);
+			$scope.createRequest();
 
 		}); 
 
@@ -351,6 +328,34 @@ function newReportController($scope, $http, $compile, data){
 		map.setZoom(10);
 
    	});
+
+   	$scope.createRequest = function(){
+
+		$scope.workingOnRequest = true;
+
+		var request = $http({
+
+        method: "get",
+        url: "/getMineData",
+        params: {
+          	country: $scope.country,
+           	}
+       	});
+
+		//It passes the function addMines on success of receiving data
+
+		request.then($scope.addMines,
+
+			function(){
+
+				console.log('error');
+
+				$scope.workingOnRequest = false;
+
+			}
+
+		);
+   	}
 
 
 	$scope.addMines = function(text){
