@@ -346,3 +346,24 @@ body{
 	z-index:-100;
 
 }
+
+.closeButton{
+
+
+	position: absolute;
+
+	top: 0;
+
+	right: 0;
+
+	width:2.5%;
+
+	height: 2.5%;
+
+	color: #fa8d70;
+
+	font-size:300%;
+
+	cursor: pointer;
+
+}

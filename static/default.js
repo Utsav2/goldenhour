@@ -26,7 +26,7 @@ app.factory('data', function () {
 
 function resizeMapDiv(smaller, position){
 
-	if(smaller){
+	/*if(smaller){
 
 		 $("#map-container").animate({
 	        height: '90%',
@@ -36,9 +36,9 @@ function resizeMapDiv(smaller, position){
 	          map.panTo(position)
 	     });
 
-	}
+	} 
 
-	else {
+	else */{
 
 		$("#map-container").animate({
 		    height: '90%',
@@ -152,6 +152,7 @@ function reportController($scope, $http, data){
 
 		  	});
 
+			map.panTo(pos);
 
 			$scope.data.latitude = report.latitude;
 
@@ -220,7 +221,6 @@ function reportController($scope, $http, data){
 		$('#map').removeClass('blurred');
 
 		$scope.LocationView = "locationChangerInvisible"
-
 	}
 
 
@@ -271,6 +271,26 @@ function reportController($scope, $http, data){
 	  	});
 
 	}	
+
+	$scope.currentlyDisabled = function(){
+
+		alert("This feature is disabled for testing purposes");
+
+	}
+
+	$scope.alertPeople = function(){
+
+		var description = $scope.data.description;
+
+		var url = "https://rest.nexmo.com/sms/json?api_key=170f4bdd&api_secret=ec35f5ad&from=NEXMO&to=919920474750&text="+description;
+
+		var request = $http({
+
+        method: "get",
+        url: url,
+       	});
+
+	}
 
 }
 
@@ -477,6 +497,8 @@ function createGoogleMap(position) {
 	map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
 	map.setOptions({styles: stylesArray});
+
+
 }
 
 function centerMapToUserPosition(initialPosition){
@@ -570,6 +592,9 @@ function updateLocationAddressValue(address){
 
 	bigger_area = addAddressComponent(builder, "administrative_area_level_2", address)
 
+	if(bigger_area.length == 0)
+		bigger_area = addAddressComponent(builder, "locality", address);
+
 	builder += bigger_area +  ", "
 
 	administrative_area = addAddressComponent(builder, "administrative_area_level_1", address)
@@ -654,13 +679,3 @@ function formatTime(mine){
 	return formattedTime;
 
 }
-
-app.directive('errSrc', function() {
-  return {
-    link: function(scope, element, attrs) {
-      element.bind('error', function() {
-        element.attr('src', attrs.errSrc);
-      });
-    }
-  }
-});
