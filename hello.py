@@ -206,7 +206,7 @@ def initiate():
 
     else:
 
-        queries = db.session.query(Report).filter(Report.country.ilike(country), Report.area.ilike(area))
+        queries = db.session.query(Report).filter(Report.country.ilike(country), Report.area.ilike(administrative_area))
 
 
     mine_array = []
