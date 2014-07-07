@@ -9,6 +9,8 @@
 
 			<script src = "{{ url_for('static', filename='default.js') }}"></script>
 
+			
+
 			<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBP9GpA13uynELdRfKAX7a9PWthWrvHhN4">
 
     		</script>
@@ -79,7 +81,7 @@
 
 						</h3>
 
-					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport(report)" ng-model="data.name" >
+					<a href = "javascript:" ng-repeat = "report in reports" ng-click = "openReport(report)" ng-model="data.name">
 
 					{[{ report.time_formatted }]}
 
@@ -90,6 +92,8 @@
 					<nav class = "menuBar menuBar-horizontal menuBar-top" >
 
 						<a ng-click="changeUserLocation()" style="cursor:pointer;"> change location </a>
+
+						<a ng-click > {[{ data.number_of_reports }]} reports </a>
 
 						<h3 href="#" ng-click="changeUserLocation()" style="cursor:pointer;">{[{ location_data_text }]}</h3>
 
