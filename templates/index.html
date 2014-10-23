@@ -9,8 +9,6 @@
 
 			<script src = "{{ url_for('static', filename='default.js') }}"></script>
 
-			
-
 			<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBP9GpA13uynELdRfKAX7a9PWthWrvHhN4">
 
     		</script>
@@ -25,7 +23,6 @@
 
 		</head>
 
-
 		<body>
 
 				<div ng-app="menu" id = "menu" ng-controller="reportController" ng-model="data.name">
@@ -37,14 +34,6 @@
 						</div>
 
 						<div class = "map-container-big" ng-class = "LocationView">
-
-							<a ng-click="changeTo(0)">India</a>
-							<a ng-click="changeTo(1)">National Defense University</a> 
-							<a ng-click="changeTo(2)">USA</a> 
-							<a ng-click="changeTo(3)">Afghanistan</a>  
-							<a ng-click="changeTo(4)">Somalia</a>
-
-							
 
 							<div class = "closeButton" ng-click = "closeLocationViewer()">
 
