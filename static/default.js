@@ -331,44 +331,41 @@ function newReportController($scope, $http, $compile, data){
 
    	$scope.createRequest = function(){
 
-		$scope.workingOnRequest = true;
+		console.log("getData initialialized")
 
-		var request = $http({
+		var myFirebaseRef = new Firebase("https://goldenhour.firebaseio.com");
 
-        method: "get",
-        url: "/getMineData",
-        params: {
-          	country: $scope.country,
-           	}
-       	});
+		myFirebaseRef.on("value", function(snapshot) {
+
+		var reportQueue = snapshot.val();
+
+		$scope.addReports(reportQueue);
+
+
+	});
 
 		//It passes the function addMines on success of receiving data
 
-		request.then($scope.addMines,
-
-			function(){
-
-				console.log('error');
-
-				$scope.workingOnRequest = false;
-
-			}
-
-		);
    	}
 
 
-	$scope.addMines = function(text){
+	$scope.addReports = function(text){
 
-		$scope.reports = text.data;
+		$scope.reports = text;
+
+		console.log($scope.reports);
+
+		var counter = 0;
 
 		for(var i in $scope.reports){
 
 			$scope.reports[i].time_formatted = formatTime($scope.reports[i]);
 
+			counter++;
+
 		}
 
-		$scope.data.number_of_reports = $scope.reports.length;
+		$scope.data.number_of_reports = counter;
 
 		$scope.workingOnRequest = false;
 
