@@ -15,9 +15,6 @@
 
 			<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
 
-    		<script src = "{{ url_for('static', filename='firebase.js') }}"></script>
-
-
     		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 			<title>
@@ -28,7 +25,7 @@
 
 		</head>
 
-		<body onClick = "getData()" >
+		<body>
 
 				<div ng-app="menu" id = "menu" ng-controller="reportController" ng-model="data.name">
 
@@ -56,11 +53,19 @@
 
 						<h2> {[{ data.time_formatted }]}</h2>
 
+						<h2> device: {[{ data.imei }]} </h2>
+
 						<h2> {[{ data.description }]} </h2>
 
 						<h3> {[{ data.latitude}]}    {[{ data.longitude}]} </h3>
 
 						<h3> {[{ locationAdder }]} </h3>
+
+						<div ng-show="data.imageExists != false">
+							
+							<img ng-src="{[{data.image}]}" class = "reportImage"></img>
+
+						</div>
 
 					</div>
 

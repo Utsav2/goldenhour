@@ -76,27 +76,6 @@ function reportController($scope, $http, data){
 
 	$scope.places = [];
 
-	//INDIA
-
-	$scope.places.push(new google.maps.LatLng(19.075955, 72.87631699999997));
-
-	//National Defense Uni
-
-	$scope.places.push(new google.maps.LatLng(38.8660, -77.0150));
-
-	//USA
-
-	$scope.places.push(new google.maps.LatLng(40.7127, -74.0059));
-
-	//Afganistan
-
-	$scope.places.push(new google.maps.LatLng(34.5333, 69.1333));
-
-	//Somalia
-
-	$scope.places.push(new google.maps.LatLng(2.0333, 45.3500));
-
-
 	createGoogleMap(position);
 
 	//centerMapToUser returns user position or initial position ^
@@ -113,29 +92,41 @@ function reportController($scope, $http, data){
 
 		$scope.reportClass = "report";
 
-		$scope.data.description = report.description
+		$scope.data.description = report.Description
 
-		$scope.data.type = report.type;
+		$scope.data.type = report.Type;
 
-		$scope.data.imei = report.imei;
+		$scope.data.imei = report.IMEI;
 
-		$scope.data.timestamp = report.timestamp
+		$scope.data.timestamp = report.Time
 
 		$scope.data.latitude = "";
 
 		$scope.data.longitude = "";
 
+		$scope.data.time_formatted = report.time_formatted
+
+		$scope.data.imageExists = false;
+
+		if(typeof report.image !== "undefined" && report.image !== ""){
+
+			$scope.data.imageExists = true;
+
+			$scope.data.image = "data:image/png;base64," + report.image;
+
+		}
+
 
 		//Internet Report or modifed SMS report
 
-		if(typeof report.latitude !== "undefined"){
+		if(typeof report.Latitude !== "undefined"){
 
 			$scope.lastMarker = $scope.marker;
 
 			$scope.myMapClass = "map-container-small";
 
-			var pos = new google.maps.LatLng(report.latitude,
-	                                       report.longitude);
+			var pos = new google.maps.LatLng(report.Latitude,
+	                                       report.Longitude);
 
 			resizeMapDiv(true, pos);
 
@@ -154,9 +145,9 @@ function reportController($scope, $http, data){
 
 			map.panTo(pos);
 
-			$scope.data.latitude = report.latitude;
+			$scope.data.latitude = report.Latitude;
 
-			$scope.data.longitude = report.longitude;
+			$scope.data.longitude = report.Longitude;
 
 		}
 		else{
@@ -280,15 +271,6 @@ function reportController($scope, $http, data){
 
 	$scope.alertPeople = function(){
 
-		var description = $scope.data.description;
-
-		var url = "https://rest.nexmo.com/sms/json?api_key=170f4bdd&api_secret=ec35f5ad&from=NEXMO&to=919920474750&text="+description;
-
-		var request = $http({
-
-        method: "get",
-        url: url,
-       	});
 
 	}
 
@@ -331,20 +313,15 @@ function newReportController($scope, $http, $compile, data){
 
    	$scope.createRequest = function(){
 
-		console.log("getData initialialized")
-
-		var myFirebaseRef = new Firebase("https://goldenhour.firebaseio.com");
+		var myFirebaseRef = new Firebase("https://goldenhour.firebaseio.com/" + country);
 
 		myFirebaseRef.on("value", function(snapshot) {
 
-		var reportQueue = snapshot.val();
+			var reportQueue = snapshot.val();
 
-		$scope.addReports(reportQueue);
+			$scope.addReports(reportQueue);
 
-
-	});
-
-		//It passes the function addMines on success of receiving data
+		});
 
    	}
 
@@ -352,8 +329,6 @@ function newReportController($scope, $http, $compile, data){
 	$scope.addReports = function(text){
 
 		$scope.reports = text;
-
-		console.log($scope.reports);
 
 		var counter = 0;
 
@@ -649,7 +624,9 @@ function addAddressComponent(builder, type_of_component, address){
 
 function formatTime(mine){
 
-	var t  = new Date(mine.timestamp * 1000);
+	console.log(mine);
+
+	var t  = new Date(mine.Time * 1000);
 
 	var today = new Date();
 

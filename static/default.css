@@ -9,6 +9,12 @@ body{
 	
 	background-color: #333333;
 }
+
+.reportImage {
+    max-width: 100%;
+    height: 50%;	
+}
+
 /*General one time styling of the Google Map */
 
 .map-container-big{
