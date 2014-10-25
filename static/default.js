@@ -70,7 +70,7 @@ function reportController($scope, $http, data){
 
 	//initial Position Mumbai
 
-	var position = new google.maps.LatLng(19.075955, 72.87631699999997);
+	var position = new google.maps.LatLng(28.6139, 77.2089);
 
 	//creating an array of positions for USA India Afghanistan Somalia. This for demonstration purposes
 
@@ -501,27 +501,6 @@ function centerMapToUserPosition(initialPosition){
 
 	    	});
 
-	    	/*
-
-	    	if(getNumberOfReports(pos) == 0){
-
-	    		move = confirm("There are no mines at your location. As this is a trial application, would you like to go to an area with sample mines?");
-	    	}
-			
-	    	//To comment out after competition
-
-			if(!move){
-
-
-			}
-
-			else{
-
-
-			}
-
-			*/
-
 	    }, function() {
 
 	      handleNoGeolocation(true);
@@ -609,7 +588,6 @@ function addAddressComponent(builder, type_of_component, address){
 
 			if(type == type_of_component){
 
-				
 				return component.long_name;
 
 			}
