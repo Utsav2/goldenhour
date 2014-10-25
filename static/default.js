@@ -217,33 +217,24 @@ function reportController($scope, $http, data){
 
 	$scope.deleteReport = function(){
 
-	var request = $http({
+		var hash = (CryptoJS.SHA1($scope.data.imei + $scope.data.timestamp)).toString(CryptoJS.enc.Hex);
 
-        method: "get",
-        url: "/deleteMineData",
-        params: {
-          	IMEI: $scope.data.imei,
-          	Time: $scope.data.timestamp
-           	}
-       	});
+		var firebase = new Firebase('https://goldenhour.firebaseio.com/' + country );
 
-	request.then(
+		console.log('https://goldenhour.firebaseio.com/' + country + '/' + hash);
 
-			function(){
+		var onComplete = function(error) {
+			if (error) {
+			    console.log('Synchronization failed');
+			} else {
 
-				console.log('success');
-
-				window.location.reload();
 			}
+		};
 
-			,
+		firebase.child(hash).remove(onComplete);
 
-			function(){
+		$scope.toggleReport();	    
 
-				console.log('error');
-			}
-
-		);
 	}
 
 	$scope.addMarker = function(mine){
@@ -337,8 +328,10 @@ function newReportController($scope, $http, $compile, data){
 			$scope.reports[i].time_formatted = formatTime($scope.reports[i]);
 
 			counter++;
-
 		}
+
+		
+
 
 		$scope.data.number_of_reports = counter;
 
@@ -355,8 +348,6 @@ app.directive('ajax', function(){
 		link: function (scope){
 
 			scope.$watch('workingOnRequest', function(value){
-
-				//console.log(value);
 
 				if(value){
 
@@ -601,8 +592,6 @@ function addAddressComponent(builder, type_of_component, address){
 }
 
 function formatTime(mine){
-
-	console.log(mine);
 
 	var t  = new Date(mine.Time * 1000);
 
